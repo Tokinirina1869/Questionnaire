@@ -5,7 +5,9 @@ import com.monapp.service.EtudiantService;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class EtudiantServlet extends HttpServlet{
     {
         List<Etudiant> etudiants = service.lister();
         req.setAttribute("etudiants", etudiants);
-        req.getRequestDispatcher("/webapp/etudiants/List.jsp").forward(req, response);
+        req.getRequestDispatcher("/etudiants/list.jsp").forward(req, response);
     }
 
     @Override
@@ -32,11 +34,12 @@ public class EtudiantServlet extends HttpServlet{
         String nom          = request.getParameter("nom");
         String prenoms      = request.getParameter("prenoms");
         String niveau       = request.getParameter("niveau");
-        String adrEmail     = request.getParameter("adrEmail");
+        String adrEmail     = request.getParameter("adr_email");
 
         Etudiant e = new Etudiant(numEtudiant, nom, prenoms, niveau, adrEmail);
         service.ajouter(e);
-        response.sendRedirect("etudiants");
+
+        response.sendRedirect(request.getContextPath() + "/etudiants");
     }
 
 }

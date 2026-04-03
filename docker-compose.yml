@@ -3,17 +3,19 @@ version: '3.8'
 services:
   app:
     build: .
-    container_name: jakarta-app
+    container_name: wildfly-app
     ports:
       - "8080:8080"
       - "9990:9990"
     volumes:
-      - ./lib/postgresql-42.6.0.jar:/tmp/postgresql-42.6.0.jar
       - ./configure-wildfly.cli:/tmp/configure-wildfly.cli
+      - ./entrypoint.sh:/opt/jboss/entrypoint.sh
     command: >
       /bin/bash -c "
         /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0 &
+        echo 'Attente du démarrage de WildFly...';
         sleep 20;
+        echo 'Exécution du script de configuration CLI...';
         /opt/jboss/wildfly/bin/jboss-cli.sh --connect --file=/tmp/configure-wildfly.cli;
         tail -f /opt/jboss/wildfly/standalone/log/server.log"
     depends_on:
@@ -21,10 +23,9 @@ services:
     networks:
       - jakarta-network
 
-  # Base de données PostgreSQL
   db:
     image: postgres:16
-    container_name: jakarta-db
+    container_name: postgres-db
     ports:
       - "5433:5432"
     environment:
@@ -36,6 +37,7 @@ services:
       - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - jakarta-network
+
 volumes:
   postgres_data:
 

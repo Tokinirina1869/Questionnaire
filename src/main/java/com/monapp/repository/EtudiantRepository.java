@@ -23,7 +23,7 @@ public class EtudiantRepository {
 
     public List<Etudiant> findAll() 
     {
-        return em.createQuery("SELECT e FROM etudiant e", Etudiant.class).getResultList();
+        return em.createQuery("SELECT e FROM Etudiant e", Etudiant.class).getResultList();
     }
 
     public void delete(Etudiant e) 

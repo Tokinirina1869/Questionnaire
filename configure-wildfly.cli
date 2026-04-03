@@ -1,0 +1,16 @@
+connect
+
+# 1. Ajout de la DataSource avec la syntaxe standard
+data-source add --name=PostgreSQLDS \
+    --jndi-name=java:jboss/datasources/PostgreSQLDS \
+    --driver-name=postgresql-42.6.0.jar \
+    --connection-url=jdbc:postgresql://db:5432/questionnaire \
+    --user-name=toki \
+    --password=toki \
+    --driver-class=org.postgresql.Driver \
+    --check-valid-connection-sql="SELECT 1" \
+    --validate-on-match=true \
+    --enabled=true
+
+# 2. Déploiement du WAR
+deploy /tmp/app-questionnaire.war --force
