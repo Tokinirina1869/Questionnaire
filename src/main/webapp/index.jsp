@@ -1,9 +1,12 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.monapp.model.Etudiant" %>
+
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Gestion QCM</title>
+<title>Gestion de Questionnaire</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -68,19 +71,36 @@
       <table class="w-full text-sm">
         <thead class="text-gray-400 text-xs uppercase">
           <tr>
-            <th class="text-left py-2">Numéro</th>
+            <th class="text-left py-2">Numéro Etudiant</th>
             <th>Nom</th>
+            <th>Prenoms</th>
             <th>Niveau</th>
+            <th>Email</th>
           </tr>
         </thead>
         <tbody>
+          <%
+            List<Etudiant> etudiants = (List<Etudiant>) request.getAttribute("etudiants");
+            if (etudiants != null)  {
+              for (Etudiant e : etudiants)  {
+          %>
           <tr class="border-t border-gray-700 hover:bg-gray-700">
-            <td class="py-2 text-gray-400 font-mono text-xs">ETU001</td>
-            <td>RAKOTO Jean</td>
+            <td class="py-2 text-gray-400 font-mono text-xs"><%= e.getNumEtudiant() %></td>
+            <td class="text-sm"><%= e.getNom() %></td>
+            <td class="text-sm"><%= e.getPrenoms() %></td>
             <td class="text-center">
-              <span class="bg-blue-900 text-blue-300 px-2 py-1 rounded text-xs">L1</span>
+              <span class="bg-blue-900 text-blue-300 px-2 py-1 rounded text-xs">
+                <%= e.getNiveau() %>
+              </span>
             </td>
+            <td class="text-sm text-gray-400"><%= e.getAdrEmail() %></td>
           </tr>
+          <%   }
+            } else { %>
+          <tr>
+            <td colspan="5" class="text-center py-4 text-gray-500">Aucun étudiant trouvé</td>
+          </tr>
+          <% } %>
         </tbody>
       </table>
     </div>

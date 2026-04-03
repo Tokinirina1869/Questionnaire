@@ -17,15 +17,18 @@ public class EtudiantServlet extends HttpServlet{
     private EtudiantService service;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse response)
-        throws ServletException, IOException
-    //{} <> 
-    {
+    protected void doGet(HttpServletRequest req, HttpServletResponse response) 
+        throws ServletException, IOException {
+        
         List<Etudiant> etudiants = service.lister();
-        req.setAttribute("etudiants", etudiants);
-        req.getRequestDispatcher("/etudiants/list.jsp").forward(req, response);
-    }
+        
+        // AJOUTE CETTE LIGNE DE DEBUG
+        System.out.println("DEBUG SERVLET: Nombre d'étudiants récupérés = " + (etudiants != null ? etudiants.size() : "NULL"));
 
+        req.setAttribute("etudiants", etudiants);
+        req.getRequestDispatcher("/index.jsp").forward(req, response);
+    }
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException    

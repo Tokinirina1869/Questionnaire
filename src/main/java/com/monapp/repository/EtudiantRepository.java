@@ -11,23 +11,34 @@ public class EtudiantRepository {
     @PersistenceContext(unitName = "app-questionnairePU")
     private EntityManager em;
 
+    //CREATE
     public void save(Etudiant e) 
     {
         em.persist(e);
     }
-
+    
+    // READ (Unique)
     public Etudiant find(String numEtudiant) 
     {
         return em.find(Etudiant.class, numEtudiant);
     }
 
+    // READ (Tous)
     public List<Etudiant> findAll() 
     {
         return em.createQuery("SELECT e FROM Etudiant e", Etudiant.class).getResultList();
     }
 
-    public void delete(Etudiant e) 
+    public Etudiant update(Etudiant e)
     {
-        em.remove(em.contains(e) ? e : em.merge(e));
+        return em.merge(e);  
+    }
+
+    public void delete(Etudiant etu) 
+    {
+        Etudiant e = find(etu.getNumEtudiant());
+        if (e != null) {
+            em.remove(e);
+        }
     }
 }
