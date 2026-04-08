@@ -12,21 +12,11 @@
 
 </head>
 
-<body class="bg-gray-900 text-gray-100 min-h-screen">
+<body class="min-h-screen">
 
 <!-- NAV -->
-<nav class="flex items-center justify-between px-8 py-4 border-b border-gray-700 bg-gray-800">
-  <div class="font-mono text-blue-400">qcm<span class="text-white">.app</span></div>
+<jsp:include page="navbar.jsp" />
 
-  <div class="flex gap-2 text-sm">
-    <a class="px-3 py-1 rounded bg-gray-700 text-white">Dashboard</a>
-    <a class="px-3 py-1 rounded text-gray-400 hover:bg-gray-700 hover:text-white">Étudiants</a>
-    <a class="px-3 py-1 rounded text-gray-400 hover:bg-gray-700 hover:text-white">QCM</a>
-    <a class="px-3 py-1 rounded text-gray-400 hover:bg-gray-700 hover:text-white">Examen</a>
-  </div>
-
-  <div class="text-xs text-gray-400 font-mono">2024-2025</div>
-</nav>
 
 <!-- STATS -->
 <div class="grid grid-cols-4 gap-4 p-6 border-b border-gray-700">
@@ -55,57 +45,6 @@
 
 <!-- MAIN -->
 <div class="grid grid-cols-2 gap-6 p-6">
-
-  <!-- ETUDIANTS -->
-  <div class="bg-gray-800 border border-gray-700 rounded-xl overflow-hidden">
-    
-    <div class="flex justify-between items-center p-4 border-b border-gray-700">
-      <span class="text-sm">Étudiants récents</span>
-      <button class="bg-blue-500 hover:bg-blue-600 px-3 py-1 text-sm rounded">+ Ajouter</button>
-    </div>
-
-    <div class="p-4">
-      <input type="text" placeholder="Rechercher..."
-        class="w-full mb-3 px-3 py-2 rounded bg-gray-700 border border-gray-600 text-sm outline-none focus:border-blue-400"/>
-      
-      <table class="w-full text-sm">
-        <thead class="text-gray-400 text-xs uppercase">
-          <tr>
-            <th class="text-left py-2">Numéro Etudiant</th>
-            <th>Nom</th>
-            <th>Prenoms</th>
-            <th>Niveau</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          <%
-            List<Etudiant> etudiants = (List<Etudiant>) request.getAttribute("etudiants");
-            if (etudiants != null)  {
-              for (Etudiant e : etudiants)  {
-          %>
-          <tr class="border-t border-gray-700 hover:bg-gray-700">
-            <td class="py-2 text-gray-400 font-mono text-xs"><%= e.getNumEtudiant() %></td>
-            <td class="text-sm"><%= e.getNom() %></td>
-            <td class="text-sm"><%= e.getPrenoms() %></td>
-            <td class="text-center">
-              <span class="bg-blue-900 text-blue-300 px-2 py-1 rounded text-xs">
-                <%= e.getNiveau() %>
-              </span>
-            </td>
-            <td class="text-sm text-gray-400"><%= e.getAdrEmail() %></td>
-          </tr>
-          <%   }
-            } else { %>
-          <tr>
-            <td colspan="5" class="text-center py-4 text-gray-500">Aucun étudiant trouvé</td>
-          </tr>
-          <% } %>
-        </tbody>
-      </table>
-    </div>
-
-  </div>
 
   <!-- CLASSEMENT -->
   <div class="bg-gray-800 border border-gray-700 rounded-xl">
@@ -161,6 +100,81 @@
   </div>
 
 </div>
+
+<div id="addStudentModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center z-50">
+    
+    <div class="bg-gray-800 border border-gray-700 w-full max-w-md rounded-xl shadow-2xl overflow-hidden">
+        
+        <div class="flex justify-between items-center p-4 border-b border-gray-700 bg-gray-900/50">
+            <h3 class="text-lg font-medium text-blue-400">Nouvel Étudiant</h3>
+            <button onclick="toggleModal()" class="text-gray-400 hover:text-white">&times;</button>
+        </div>
+
+        <form method="POST" action="<%= request.getContextPath() %>/etudiants" class="p-6 space-y-4">
+            <div>
+                <label class="block text-xs text-gray-400 uppercase mb-1">Numéro Étudiant</label>
+                <input type="text" name="num_etudiant" required
+                    class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded focus:border-blue-500 outline-none text-sm">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs text-gray-400 uppercase mb-1">Nom</label>
+                    <input type="text" name="nom" required
+                        class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded focus:border-blue-500 outline-none text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 uppercase mb-1">Prénoms</label>
+                    <input type="text" name="prenoms" required
+                        class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded focus:border-blue-500 outline-none text-sm">
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs text-gray-400 uppercase mb-1">Niveau</label>
+                <select name="niveau" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded focus:border-blue-500 outline-none text-sm">
+                    <option value="L1">Licence 1</option>
+                    <option value="L2">Licence 2</option>
+                    <option value="L3">Licence 3</option>
+                    <option value="M1">Master 1</option>
+                    <option value="M2">Master 2</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs text-gray-400 uppercase mb-1">Email</label>
+                <input type="email" name="adr_email" required
+                    class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded focus:border-blue-500 outline-none text-sm">
+            </div>
+
+            <div class="flex gap-3 pt-2">
+                <button type="button" onclick="toggleModal()" 
+                    class="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded text-sm transition-colors">Annuler</button>
+                <button type="submit" 
+                    class="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded text-sm font-medium transition-colors">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+function toggleModal() {
+    const modal = document.getElementById('addStudentModal');
+    if (modal.classList.contains('hidden')) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    } else {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+}
+
+// Fermer le modal si on clique à l'extérieur du cadre gris
+window.onclick = function(event) {
+    const modal = document.getElementById('addStudentModal');
+    if (event.target == modal) {
+        toggleModal();
+    }
+}
+</script>
 
 </body>
 </html>

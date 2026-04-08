@@ -16,17 +16,24 @@ public class EtudiantServlet extends HttpServlet{
     @Inject
     private EtudiantService service;
 
+    // private EtudiantService service = new EtudiantService();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse response) 
         throws ServletException, IOException {
         
-        List<Etudiant> etudiants = service.lister();
-        
-        // AJOUTE CETTE LIGNE DE DEBUG
-        System.out.println("DEBUG SERVLET: Nombre d'étudiants récupérés = " + (etudiants != null ? etudiants.size() : "NULL"));
+        try {
+            System.out.println("Servlet appelée !");
 
-        req.setAttribute("etudiants", etudiants);
-        req.getRequestDispatcher("/index.jsp").forward(req, response);
+            List<Etudiant> etudiants = service.lister();
+            
+            req.setAttribute("etudiants", etudiants);
+            req.getRequestDispatcher("/etudiants/list.jsp").forward(req, response);
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        
     }
     
     @Override
