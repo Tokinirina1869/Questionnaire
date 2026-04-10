@@ -1,0 +1,62 @@
+Model → classe User.java, Questionnaire.java
+Repository → accès PostgreSQL avec JPA
+Service → logique métier
+Controller → Servlets REST
+Vue → pages HTML/JSF
+
+Maven = outil de build
+Wildfly = Serveur d'application complet
+-----------------------------------------------------------------
+JPA = Jakarta Persistence API → lien entre les objets java et les tables d'une BD sans écrire SQL manuellement!
+    Exemple: 
+
+    // ❌ Sans JPA — tout écrire manuellement
+    Connection conn = DriverManager.getConnection("jdbc:postgresql://...");
+    PreparedStatement ps = conn.prepareStatement(
+        "INSERT INTO etudiant (num_etudiant, nom, prenoms, niveau, adr_email) " +
+        "VALUES (?, ?, ?, ?, ?)"
+    );
+    ps.setString(1, e.getNumEtudiant());
+    ps.setString(2, e.getNom());
+    ps.setString(3, e.getPrenoms());
+    ps.setString(4, e.getNiveau());
+    ps.setString(5, e.getAdrEmail());
+    ps.executeUpdate();
+
+
+    // ✅ Avec JPA — une seule ligne !
+    em.persist(e);
+
+    //Annotations JPA
+    @Entity     → "Cette classe = une table"
+    @Table      → "le nom exact de la table"
+    @Id         → "c'est la clé primaire"
+    @Column     → "les détails de la colonne"
+
+    // Opérations JPA
+    em.persist(e) → Insert into etudiant ....
+    em.find(Etudiant.class, "ETU001) → SELECT * where num_etudiant = ?
+    em.merge(e) → UPDATE etudiant SET ...
+    em.remove(e) → DELETE from etudiant where ... 
+
+    Pour permettre de connecter à la base de données PostgreSQL, on utilise le fichier persistence.xml
+
+        JPA est un traducteur automatique entre tes objets Java et ta base de données PostgreSQL — il génère le SQL à ta place.
+    --------------------------------------------------------
+
+Formulaire add.jsp
+        ↓ POST
+EtudiantServlet.doPost()
+      ↓
+new Etudiant(numEtudiant, nom, prenoms, niveau, adrEmail)
+      ↓
+EtudiantService.ajouter(e)
+      ↓
+EtudiantRepository.save(e)
+      ↓
+em.persist(e)  ← JPA lit les annotations @Entity, @Column...
+      ↓
+INSERT INTO etudiant (num_etudiant, nom, prenoms, niveau, adr_email)
+VALUES ('ETU001', 'RAKOTO', 'Jean', 'L1', 'jean@mail.com')
+      ↓
+PostgreSQL enregistre ✅

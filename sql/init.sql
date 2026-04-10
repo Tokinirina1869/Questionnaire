@@ -13,6 +13,7 @@ CREATE TABLE qcm (
     reponse1            VARCHAR(200) NOT NULL,
     reponse2            VARCHAR(200) NOT NULL,
     reponse3            VARCHAR(200) NOT NULL,
+    reponse4            VARCHAR(200) NOT NULL,
     bonne_reponse       INT CHECK (bonne_reponse IN (1,2,3,4))
 );
 

@@ -20,7 +20,10 @@ public class EtudiantService {
     {
         return repo.findAll();
     }
-
+    public void modifier(Etudiant e)
+    {
+        repo.update(e);
+    }
     public void supprimer(Etudiant e) 
     {
         repo.delete(e);

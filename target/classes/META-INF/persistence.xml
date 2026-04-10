@@ -5,11 +5,12 @@
              version="3.0">
     
     <persistence-unit name="app-questionnairePU">
+        <!-- Quelle base de données -->
         <jta-data-source>java:jboss/datasources/PostgreSQLDS</jta-data-source>
         
         <properties>
             <property name="jakarta.persistence.schema-generation.database.action" value="update"/>
-            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.show_sql" value="true"/> <!-- Afficher les requêtes générées -->
             <property name="hibernate.format_sql" value="true"/>
         </properties>
     </persistence-unit>

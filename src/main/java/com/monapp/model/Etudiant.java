@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "etudiant")
 public class Etudiant {
-    @Id
+    @Id // Signe de clé primaire
     @Column(name = "num_etudiant", length = 20)
     private String numEtudiant;
 
@@ -21,9 +21,10 @@ public class Etudiant {
     @Column(name = "adr_email", nullable = false, unique = true, length = 200)
     private String adrEmail;
 
-    // Constructeurs
+    // Constructeur vide — OBLIGATOIRE pour JPA
     public Etudiant() {}
 
+    // Constructeur complet — utilisé dans la Servlet
     public Etudiant(String numEtudiant, String nom, String prenoms, String niveau, String adrEmail)
     {
         this.numEtudiant    = numEtudiant;
@@ -34,8 +35,8 @@ public class Etudiant {
     }
 
     // Getters et Setters
-    public String getNumEtudiant() { return numEtudiant; }
-    public void setNumEtudiant(String numEtudiant) { this.numEtudiant = numEtudiant; }
+    public String getNumEtudiant() { return numEtudiant; } // Lire la valeur
+    public void setNumEtudiant(String numEtudiant) { this.numEtudiant = numEtudiant; } // Modifier la valeur
 
     public String getNom() { return nom; }
     public void setNom(String nom) { this.nom = nom; }

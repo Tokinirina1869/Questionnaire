@@ -11,10 +11,10 @@ public class EtudiantRepository {
     @PersistenceContext(unitName = "app-questionnairePU")
     private EntityManager em;
 
-    //CREATE
+    //CREATE = Insert into etudiant ...
     public void save(Etudiant e) 
     {
-        em.persist(e);
+        em.persist(e); // persist = inserer en BD
     }
     
     // READ (Unique)
@@ -29,11 +29,13 @@ public class EtudiantRepository {
         return em.createQuery("SELECT e FROM Etudiant e", Etudiant.class).getResultList();
     }
 
+    // Update
     public Etudiant update(Etudiant e)
     {
-        return em.merge(e);  
+        return em.merge(e);  // merge = Mettre à jour en BD
     }
 
+    // Delete
     public void delete(Etudiant etu) 
     {
         Etudiant e = find(etu.getNumEtudiant());
