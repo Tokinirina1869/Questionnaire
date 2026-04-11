@@ -48,18 +48,18 @@ public class Qcm {
     public String getQuestion() { return question; }
     public void setQuestion(String question) { this.question = question; }
 
-    public String getRepone1() { return reponse1; }
+    public String getReponse1() { return reponse1; }
     public void setReponse1(String reponse1) { this.reponse1 = reponse1; }
 
-    public String getRepone2() { return reponse2; }
+    public String getReponse2() { return reponse2; }
     public void setReponse2(String reponse2) { this.reponse2 = reponse2; }
 
-    public String getRepone3() { return reponse3; }
+    public String getReponse3() { return reponse3; }
     public void setReponse3(String reponse3) { this.reponse3 = reponse3; }
 
-    public String getRepone4() { return reponse4; }
+    public String getReponse4() { return reponse4; }
     public void setReponse4(String reponse4) { this.reponse4 = reponse4; }
 
-    public Integer getBonneRepone() { return bonneReponse; }
+    public Integer getBonneReponse() { return bonneReponse; }
     public void setBonneReponse(Integer bonneReponse) { this.bonneReponse = bonneReponse; }
 }

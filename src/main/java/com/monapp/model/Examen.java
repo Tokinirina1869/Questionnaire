@@ -18,7 +18,7 @@ public class Examen {
     private String anneeUniv;
 
     @Column(name = "note")
-    private Integer note;
+    private int note;
 
 
     public Examen() {}

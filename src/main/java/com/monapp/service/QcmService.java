@@ -30,7 +30,17 @@ public class QcmService {
         repoQcm.update(qcm);
     }
 
-    public void supprimerQcm(Long id) {
+    public void supprimerQcm(Integer id) {
         repoQcm.delete(id);
+    }
+
+    public Qcm trouverParId(Integer id)
+    {
+        return repoQcm.findById(id);
+    }
+
+    public List<Qcm> dixQuestionsAleatoires()
+    {
+        return repoQcm.findRandom10();
     }
 }

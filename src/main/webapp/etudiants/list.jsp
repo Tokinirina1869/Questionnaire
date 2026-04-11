@@ -26,10 +26,10 @@
             </a>
         </div>
 
-        <div class="border border-gray-700 rounded-xl shadow-xl overflow-hidden">
+        <div class="border rounded-xl shadow-xl overflow-hidden">
 
             <!-- Barre de recherche -->
-            <div class="p-4 border-b border-gray-700">
+            <div class="p-4 border-b">
                 <form method="GET" action="<%= request.getContextPath() %>/etudiants" 
                       class="flex gap-3">
                     <input type="hidden" name="action" value="search"/>
@@ -58,13 +58,13 @@
                             <th class="px-6 py-4">Actions</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-700">
+                    <tbody class="divide-y">
                         <%
                             List<Etudiant> etudiants = (List<Etudiant>) request.getAttribute("etudiants");
                             if (etudiants != null && !etudiants.isEmpty()) {
                                 for (Etudiant e : etudiants) {
                         %>
-                        <tr class="hover:bg-gray-800 transition-colors">
+                        <tr>
                             <td class="px-6 py-4 font-mono text-blue-400 text-sm">
                                 <%= e.getNumEtudiant() %>
                             </td>

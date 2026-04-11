@@ -102,7 +102,7 @@
                         class="flex-1 px-4 py-3 bg-blue-600 hover:bg-blue-500 rounded-xl 
                                text-sm font-bold shadow-lg shadow-blue-900/20 transition-all 
                                flex items-center justify-center gap-2">
-                    <i class="bi bi-person-plus"></i> Enregistrer
+                    <i class="bi bi-person-plus"></i> Enregistrer étudiant
                 </button>
             </div>
 

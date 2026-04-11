@@ -9,6 +9,7 @@ import java.util.List;
 
 @Stateless
 public class QcmRepository {
+    
     @PersistenceContext
     private EntityManager em;
 
@@ -22,7 +23,12 @@ public class QcmRepository {
         return em.createQuery("SELECT q FROM Qcm q", Qcm.class).getResultList();
     }
 
-    public Qcm findById(Long id)
+    public List<Qcm> findRandom10() {
+        return em.createNativeQuery("SELECT * FROM qcm ORDER BY RANDOM() LIMIT 10", Qcm.class)
+                .getResultList(); 
+    }
+
+    public Qcm findById(Integer id)
     {
         return em.find(Qcm.class, id);
     }
@@ -32,7 +38,7 @@ public class QcmRepository {
         return em.merge(qcm);
     }
 
-    public void delete(Long id)
+    public void delete(Integer id)
     {
         Qcm qcm = em.find(Qcm.class, id);
         if (qcm != null) {
