@@ -10,7 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
-<body class="min-h-screen">
+<body>
     <jsp:include page="/navbar.jsp" />
     
     <main class="max-w-6xl mx-auto p-6">

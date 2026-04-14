@@ -10,7 +10,7 @@ public class Examen {
     @Column(name = "num_exam")
     private Integer numExam;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "num_etudiant")
     private Etudiant etudiant;
 
@@ -33,8 +33,8 @@ public class Examen {
     public Integer getNumExam() { return numExam; }
     public void setNumExam(Integer numExam) { this.numExam = numExam; }
 
-    public Etudiant getNumEtudiant() { return etudiant; }
-    public void setNumEtudiant(Etudiant etudiant) { this.etudiant = etudiant; }
+    public Etudiant getEtudiant() { return etudiant; }
+    public void setEtudiant(Etudiant etudiant) { this.etudiant = etudiant; }
 
     public String getAnneeUniv(){ return anneeUniv; }
     public void setAnneeUniv(String anneeUniv) { this.anneeUniv = anneeUniv; }

@@ -20,4 +20,8 @@ public class ExamenService {
     {
         return repoExam.findAll();
     }
+    public Examen trouverParId(Integer id)
+    {
+        return repoExam.findById(id);
+    }
 }

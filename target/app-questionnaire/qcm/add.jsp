@@ -4,11 +4,11 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Ajouter nouvelle Question</title>
+    <title>Gestion de Questionnaire</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
-<body class="min-h-screen">
+<body>
     <jsp:include page="/navbar.jsp" />
     <main class="max-w-xl mx-auto p-6">
         <div class="flex items-center gap-4 mb-8">
@@ -42,25 +42,41 @@
                     <label for="reponse1" class="text-xs font-bold tracking-wider">
                         Réponse1
                     </label>
-                    <input type="text" name="reponse1" required placeholder="Reponse1" class="w-full px-4 py-2 5 rounded-lg text-sm">
+                    <input type="text" name="reponse1" required placeholder="Reponse1" 
+                        class="w-full px-4 py-2.5 rounded-lg text-sm
+                            border border-gray-300 dark:border-gray-700
+                            bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
+                            focus:ring-2 focus:ring-blue-500 outline-none"/>
                 </div>
                 <div class="space-y-1">
                     <label for="reponse2" class="text-xs font-bold tracking-wider">
                         Réponse2
                     </label>
-                    <input type="text" name="reponse2" required placeholder="Reponse2" class="w-full px-4 py-2 5 rounded-lg text-sm">
+                    <input type="text" name="reponse2" required placeholder="Reponse2"
+                        class="w-full px-4 py-2.5 rounded-lg text-sm
+                            border border-gray-300 dark:border-gray-700
+                            bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
+                            focus:ring-2 focus:ring-blue-500 outline-none"/>
                 </div>
                 <div class="space-y-1">
                     <label for="reponse3" class="text-xs font-bold tracking-wider">
                         Réponse3
                     </label>
-                    <input type="text" name="reponse3" required placeholder="Reponse3" class="w-full px-4 py-2 5 rounded-lg text-sm">
+                    <input type="text" name="reponse3" required placeholder="Reponse3"
+                        class="w-full px-4 py-2.5 rounded-lg text-sm
+                            border border-gray-300 dark:border-gray-700
+                            bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
+                            focus:ring-2 focus:ring-blue-500 outline-none"/>
                 </div>
                 <div class="space-y-1">
                     <label for="reponse4" class="text-xs font-bold tracking-wider">
                         Réponse4
                     </label>
-                    <input type="text" name="reponse4" required placeholder="Reponse4" class="w-full px-4 py-2 5 rounded-lg text-sm">
+                    <input type="text" name="reponse4" required placeholder="Reponse4"
+                        class="w-full px-4 py-2.5 rounded-lg text-sm
+                            border border-gray-300 dark:border-gray-700
+                            bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
+                            focus:ring-2 focus:ring-blue-500 outline-none"/>
                 </div>
             </div>
 
@@ -70,11 +86,14 @@
                 </label>
 
                 <select name="bonne_reponse"
-                    class="w-full px-4 py-2.5 rounded-lg text-sm">
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
-                    <option value="3">Option 4</option>
+                    class="w-full px-4 py-2.5 rounded-lg text-sm
+                        border border-gray-300 dark:border-gray-700
+                        bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
+                        focus:ring-2 focus:ring-blue-500 outline-none"/>
+                    <option class="dark:bg-gray-800" value="1">Option 1</option>
+                    <option class="dark:bg-gray-800" value="2">Option 2</option>
+                    <option class="dark:bg-gray-800" value="3">Option 3</option>
+                    <option class="dark:bg-gray-800" value="3">Option 4</option>
                 </select>
             </div>
 

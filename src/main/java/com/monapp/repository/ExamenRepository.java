@@ -20,6 +20,11 @@ public class ExamenRepository {
 
     public List<Examen> findAll()
     {
-        return em.createQuery("SELECT e FROM Examen e ORDER BY e.note DESC", Examen.class).getResultList();
+        return em.createQuery("SELECT e FROM Examen e JOIN FETCH e.etudiant ORDER BY e.note DESC", Examen.class).getResultList();
+    }
+
+    public Examen findById(Integer id)
+    {
+        return em.find(Examen.class, id);
     }
 }

@@ -6,6 +6,7 @@ import com.monapp.model.Qcm;
 import com.monapp.service.EtudiantService;
 import com.monapp.service.ExamenService;
 import com.monapp.service.QcmService;
+import com.monapp.service.EmailService;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -27,6 +28,9 @@ public class ExamenServlet extends HttpServlet {
 
     @Inject
     private ExamenService examService;
+
+    @Inject
+    private EmailService emailService;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse reponse)
@@ -51,6 +55,22 @@ public class ExamenServlet extends HttpServlet {
         if ("passer".equals(action)) {
             request.getRequestDispatcher("/examen/passer.jsp")
                     .forward(request, reponse);
+        }
+        else if ("envoyer".equals(action)) {
+            Integer numExam = Integer.parseInt(request.getParameter("numExam"));
+            Examen examen   = examService.trouverParId(numExam);
+
+            String email    = examen.getEtudiant().getEmail();
+            String nom      = examen.getEtudiant().getNom() + " "
+                            + examen.getEtudiant().getPrenoms();
+            int note        = examen.getNote();
+            String anneeUniv = examen.getAnneeUniv();
+
+            emailService.envoyerNote(email, nom, note, anneeUniv);
+
+            reponse.sendRedirect(request.getContextPath()
+                    + "/examen?action=resultats&succes=email");
+            return;
         }
         else if ("resultats".equals(action)) {
             request.setAttribute("examens", examService.listerExamen());

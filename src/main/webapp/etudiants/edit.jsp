@@ -4,11 +4,11 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Modifier un étudiant</title>
+    <title>Gestion de Questionnaire</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
-<body class="min-h-screen">
+<body>
 
     <jsp:include page="/navbar.jsp" />
 
@@ -67,16 +67,22 @@
                         Nom *
                     </label>
                     <input type="text" name="nom" required
-                           value="<%= e.getNom() %>"
-                           class="w-full px-4 py-2.5 rounded-lg text-sm transition-all"/>
+                        value="<%= e.getNom() %>"
+                        class="w-full px-4 py-2.5 rounded-lg text-sm
+                           border border-gray-300 dark:border-gray-700
+                           bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
+                           focus:ring-2 focus:ring-blue-500 outline-none"/>
                 </div>
                 <div class="space-y-1">
                     <label class="text-xs font-bold tracking-wider">
                         Prénoms *
                     </label>
                     <input type="text" name="prenoms" required
-                           value="<%= e.getPrenoms() %>"
-                           class="w-full px-4 py-2.5 rounded-lg text-sm"/>
+                        value="<%= e.getPrenoms() %>"
+                        class="w-full px-4 py-2.5 rounded-lg text-sm
+                           border border-gray-300 dark:border-gray-700
+                           bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
+                           focus:ring-2 focus:ring-blue-500 outline-none"/>
                 </div>
             </div>
 
@@ -86,12 +92,15 @@
                     Niveau d'étude *
                 </label>
                 <select name="niveau"
-                        class="w-full px-4 py-2.5 rounded-lg text-sm">
-                    <option value="L1" <%= "L1".equals(e.getNiveau()) ? "selected" : "" %>>Licence 1 (L1)</option>
-                    <option value="L2" <%= "L2".equals(e.getNiveau()) ? "selected" : "" %>>Licence 2 (L2)</option>
-                    <option value="L3" <%= "L3".equals(e.getNiveau()) ? "selected" : "" %>>Licence 3 (L3)</option>
-                    <option value="M1" <%= "M1".equals(e.getNiveau()) ? "selected" : "" %>>Master 1 (M1)</option>
-                    <option value="M2" <%= "M2".equals(e.getNiveau()) ? "selected" : "" %>>Master 2 (M2)</option>
+                        class="w-full px-4 py-2.5 rounded-lg text-sm
+                           border border-gray-300 dark:border-gray-700
+                           bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
+                           focus:ring-2 focus:ring-blue-500 outline-none"/>
+                    <option class="dark:bg-gray-800" value="L1" <%= "L1".equals(e.getNiveau()) ? "selected" : "" %>>Licence 1 (L1)</option>
+                    <option class="dark:bg-gray-800" value="L2" <%= "L2".equals(e.getNiveau()) ? "selected" : "" %>>Licence 2 (L2)</option>
+                    <option class="dark:bg-gray-800" value="L3" <%= "L3".equals(e.getNiveau()) ? "selected" : "" %>>Licence 3 (L3)</option>
+                    <option class="dark:bg-gray-800" value="M1" <%= "M1".equals(e.getNiveau()) ? "selected" : "" %>>Master 1 (M1)</option>
+                    <option class="dark:bg-gray-800" value="M2" <%= "M2".equals(e.getNiveau()) ? "selected" : "" %>>Master 2 (M2)</option>
                 </select>
             </div>
 
@@ -101,8 +110,11 @@
                     Adresse Email *
                 </label>
                 <input type="email" name="adr_email" required
-                       value="<%= e.getAdrEmail() %>"
-                       class="w-full px-4 py-2.5 rounded-lg text-sm"/>
+                    value="<%= e.getEmail() %>"
+                    class="w-full px-4 py-2.5 rounded-lg text-sm
+                        border border-gray-300 dark:border-gray-700
+                        bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
+                        focus:ring-2 focus:ring-blue-500 outline-none"/>
             </div>
 
             <!-- Boutons -->

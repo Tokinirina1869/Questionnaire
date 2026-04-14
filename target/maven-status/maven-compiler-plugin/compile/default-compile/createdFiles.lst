@@ -11,3 +11,4 @@ com/monapp/repository/EtudiantRepository.class
 com/monapp/controller/EtudiantServlet.class
 com/monapp/controller/ExamenServlet.class
 com/monapp/model/Examen.class
+com/monapp/service/EmailService$1.class

@@ -33,4 +33,13 @@ public class EtudiantService {
     {
         return repo.find(numEtudiant);
     }
+
+    public List<Etudiant> rechercher(String query)
+    {
+        if (query == null || query.trim().isEmpty()) {
+            return repo.findAll();
+        }
+        
+        return repo.search(query);
+    }
 }

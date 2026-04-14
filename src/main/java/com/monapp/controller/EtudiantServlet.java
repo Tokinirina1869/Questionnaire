@@ -48,6 +48,14 @@ public class EtudiantServlet extends HttpServlet {
                 response.sendRedirect(req.getContextPath() + "/etudiants");
 
             } 
+            else if ("search".equals(action)) {
+                String q = req.getParameter("q");
+                req.setAttribute("etudiants", service.rechercher(q));
+                req.setAttribute("query", q);
+                req.getRequestDispatcher("/etudiants/list.jsp")
+                    .forward(req, response);
+                return;
+            }
             else {
                 List<Etudiant> etudiants = service.lister();
                 req.setAttribute("etudiants", etudiants);

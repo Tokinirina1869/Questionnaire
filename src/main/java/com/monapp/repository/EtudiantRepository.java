@@ -43,4 +43,18 @@ public class EtudiantRepository {
             em.remove(e);
         }
     }
+
+    public List<Etudiant> search(String query)
+    {
+        return em.createQuery(
+            "SELECT e FROM Etudiant e " +
+            "WHERE e.numEtudiant LIKE :q " + 
+            "OR e.nom       LIKE :q " +
+            "OR e.prenoms   LIKE :q " +
+            "OR e.niveau    LIKE :q " +
+            "OR e.email     LIKE :q ", 
+            Etudiant.class)
+            .setParameter("q", "%" + query + "%")
+            .getResultList();
+    }
 }

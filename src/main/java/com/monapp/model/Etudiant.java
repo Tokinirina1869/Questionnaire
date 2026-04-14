@@ -19,19 +19,19 @@ public class Etudiant {
     private String niveau;
 
     @Column(name = "adr_email", nullable = false, unique = true, length = 200)
-    private String adrEmail;
+    private String email;
 
     // Constructeur vide — OBLIGATOIRE pour JPA
     public Etudiant() {}
 
     // Constructeur complet — utilisé dans la Servlet
-    public Etudiant(String numEtudiant, String nom, String prenoms, String niveau, String adrEmail)
+    public Etudiant(String numEtudiant, String nom, String prenoms, String niveau, String email)
     {
         this.numEtudiant    = numEtudiant;
         this.nom            = nom;
         this.prenoms        = prenoms;
         this.niveau         = niveau;
-        this.adrEmail       = adrEmail;
+        this.email       = email;
     }
 
     // Getters et Setters
@@ -47,6 +47,6 @@ public class Etudiant {
     public String getNiveau() { return niveau; }
     public void setNiveau(String niveau) { this.niveau = niveau; }
 
-    public String getAdrEmail() { return adrEmail; }
-    public void setAdrEmail(String adrEmail) { this.adrEmail = adrEmail; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 }

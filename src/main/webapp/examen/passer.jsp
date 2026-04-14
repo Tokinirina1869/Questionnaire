@@ -19,10 +19,10 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Passer l'examen</title>
+    <title>Gestion de Questionnaire</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-900 text-gray-100 min-h-screen">
+<body>
     <jsp:include page="/navbar.jsp"/>
 
     <main class="max-w-3xl mx-auto p-6">
@@ -34,34 +34,38 @@
               class="space-y-6">
 
             <!-- Infos étudiant -->
-            <div class="bg-gray-800 border border-gray-700 rounded-xl p-5 space-y-4">
+            <div class="border rounded-xl p-5 space-y-4">
                 <h2 class="font-semibold text-blue-400">Informations</h2>
 
                 <div>
-                    <label class="text-xs font-bold text-gray-400 uppercase">Étudiant</label>
+                    <label class="text-xs font-bold uppercase">Étudiant</label>
                     <select name="num_etudiant" required
-                            class="w-full mt-1 px-4 py-2.5 bg-gray-900 border border-gray-600
-                                   rounded-lg text-sm focus:outline-none focus:border-blue-500">
+                        class="w-full px-4 py-2.5 rounded-lg text-sm
+                            border border-gray-300 dark:border-gray-700
+                            bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
+                            focus:ring-2 focus:ring-blue-500 outline-none"/>
                         <option value="">-- Choisir un étudiant --</option>
                         <% for (Etudiant e : etudiants) { %>
-                        <option value="<%= e.getNumEtudiant() %>">
-                            <%= e.getNumEtudiant() %> — <%= e.getNom() %> <%= e.getPrenoms() %>
-                        </option>
+                            <option value="<%= e.getNumEtudiant() %>">
+                                <%= e.getNumEtudiant() %> — <%= e.getNom() %> <%= e.getPrenoms() %>
+                            </option>
                         <% } %>
                     </select>
                 </div>
 
                 <div>
-                    <label class="text-xs font-bold text-gray-400 uppercase">
+                    <label class="text-xs font-bold uppercase">
                         Année universitaire
                     </label>
                     <input type="text" name="annee_univ" required
-                           placeholder="Ex: 2024-2025"
-                           class="w-full mt-1 px-4 py-2.5 bg-gray-900 border border-gray-600
-                                  rounded-lg text-sm focus:outline-none focus:border-blue-500"/>
+                        placeholder="Ex: 2024-2025"
+                        class="w-full px-4 py-2.5 rounded-lg text-sm
+                            border border-gray-300 dark:border-gray-700
+                            bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
+                            focus:ring-2 focus:ring-blue-500 outline-none"/>
                 </div>
 
-                <button type="button" onclick="afficherQuestions()" class="py-2 w-full font-bold bg-blue-800 transition-all rounded-lg">
+                <button type="button" onclick="afficherQuestions()" class="py-2 w-full text-white font-bold bg-blue-800 transition-all rounded-lg">
                     Passer à l'examen
                 </button>
             </div>
@@ -72,9 +76,8 @@
             <div id="section-questions" class="hidden space-y-6">
                 <h2 class="text-xl font-semibold text-blue-400">Répondez aux questions</h2>
                 <% int num = 1; for (Qcm q : questions) { %>
-                    <div class="bg-gray-800 border border-gray-700 rounded-xl p-5">
+                    <div class="border rounded-xl p-5">
 
-                        <!-- Champ caché pour identifier la question -->
                         <input type="hidden" name="num_quest" value="<%= q.getNumQuest() %>"/>
 
                         <p class="font-medium mb-4">
@@ -83,19 +86,19 @@
                         </p>
 
                         <div class="space-y-2">
-                            <label class="flex items-center gap-3 p-3 bg-gray-700 rounded-lg cursor-pointer hover:bg-gray-600">
+                            <label class="flex items-center gap-3 p-3 rounded-lg border dark:border-gray-800 hover:bg-blue-900/20 cursor-pointer ">
                                 <input type="radio" name="reponse_<%= q.getNumQuest() %>" value="1" required/>
                                 <span class="text-sm"><%= q.getReponse1() %></span>
                             </label>
-                            <label class="flex items-center gap-3 p-3 bg-gray-700 rounded-lg cursor-pointer hover:bg-gray-600">
+                            <label class="flex items-center gap-3 p-3 rounded-lg border dark:border-gray-800 hover:bg-blue-900/20 cursor-pointer  ">
                                 <input type="radio" name="reponse_<%= q.getNumQuest() %>" value="2"/>
                                 <span class="text-sm"><%= q.getReponse2() %></span>
                             </label>
-                            <label class="flex items-center gap-3 p-3 bg-gray-700 rounded-lg cursor-pointer hover:bg-gray-600">
+                            <label class="flex items-center gap-3 p-3 rounded-lg border dark:border-gray-800 hover:bg-blue-900/20 cursor-pointer  ">
                                 <input type="radio" name="reponse_<%= q.getNumQuest() %>" value="3"/>
                                 <span class="text-sm"><%= q.getReponse3() %></span>
                             </label>
-                            <label class="flex items-center gap-3 p-3 bg-gray-700 rounded-lg cursor-pointer hover:bg-gray-600">
+                            <label class="flex items-center gap-3 p-3 rounded-lg border dark:border-gray-800 hover:bg-blue-900/20 cursor-pointer  ">
                                 <input type="radio" name="reponse_<%= q.getNumQuest() %>" value="4"/>
                                 <span class="text-sm"><%= q.getReponse4() %></span>
                             </label>
@@ -116,12 +119,12 @@
     </main>
     
     <script>
-        function afficherQuestions(){
-            const etudiant  = document.querySelector('select[name="num_etudiant"]');
-            const annee     = document.querySelector('input[name="annee_univ"]');
+        function afficherQuestions(btn){
+            const etudiant  = document.querySelector('select[name="num_etudiant"]').value;
+            const annee     = document.querySelector('input[name="annee_univ"]').value;
 
             if(etudiant === "" || annee === "") {
-                alert("Veuillez remplir le numéro matricule et l'année scolaire avant de commencer !")
+                alert("Veuillez remplir les informations avant de commencer !")
                 return;
             }
             document.getElementById('section-questions').classList.remove('hidden');

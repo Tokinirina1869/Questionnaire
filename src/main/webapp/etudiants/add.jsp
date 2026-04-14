@@ -3,11 +3,11 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Ajouter un étudiant</title>
+    <title>Gestion de Questionnaire</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
-<body class="min-h-screen">
+<body>
 
     <jsp:include page="/navbar.jsp" />
 
@@ -44,8 +44,11 @@
                     Numéro Étudiant *
                 </label>
                 <input type="text" name="num_etudiant" required
-                       placeholder="Ex: ETU-001"
-                       class="w-full px-4 py-2.5 rounded-lg text-sm transition-all"/>
+                    placeholder="Ex: ETU-001"
+                    class="w-full px-4 py-2.5 rounded-lg text-sm
+                        border border-gray-300 dark:border-gray-700
+                        bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
+                        focus:ring-2 focus:ring-blue-500 outline-none"/>
             </div>
 
             <!-- Nom et Prénoms -->
@@ -55,14 +58,20 @@
                         Nom *
                     </label>
                     <input type="text" name="nom" required
-                           class="w-full px-4 py-2.5 rounded-lg text-sm"/>
+                        class="w-full px-4 py-2.5 rounded-lg text-sm
+                           border border-gray-300 dark:border-gray-700
+                           bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
+                           focus:ring-2 focus:ring-blue-500 outline-none"/>
                 </div>
                 <div class="space-y-1">
                     <label class="text-xs font-bold tracking-wider">
                         Prénoms *
                     </label>
                     <input type="text" name="prenoms" required
-                           class="w-full px-4 py-2.5 rounded-lg text-sm"/>
+                           class="w-full px-4 py-2.5 rounded-lg text-sm
+                           border border-gray-300 dark:border-gray-700
+                           bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
+                           focus:ring-2 focus:ring-blue-500 outline-none"/>
                 </div>
             </div>
 
@@ -72,12 +81,17 @@
                     Niveau d'étude *
                 </label>
                 <select name="niveau"
-                        class="w-full px-4 py-2.5 rounded-lg text-sm">
-                    <option value="L1">Licence 1 (L1)</option>
-                    <option value="L2">Licence 2 (L2)</option>
-                    <option value="L3">Licence 3 (L3)</option>
-                    <option value="M1">Master 1 (M1)</option>
-                    <option value="M2">Master 2 (M2)</option>
+                    class="w-full px-4 py-2.5 rounded-lg text-sm 
+                        border border-gray-300 dark:border-gray-700
+                        bg-white dark:bg-gray-800 
+                        text-gray-900 dark:text-gray-100
+                        focus:ring-2 focus:ring-blue-500 outline-none">
+                            
+                    <option value="L1" class="dark:bg-gray-800">Licence 1 (L1)</option>
+                    <option value="L2" class="dark:bg-gray-800">Licence 2 (L2)</option>
+                    <option value="L3" class="dark:bg-gray-800">Licence 3 (L3)</option>
+                    <option value="M1" class="dark:bg-gray-800">Master 1 (M1)</option>
+                    <option value="M2" class="dark:bg-gray-800">Master 2 (M2)</option>
                 </select>
             </div>
 
@@ -87,8 +101,11 @@
                     Adresse Email *
                 </label>
                 <input type="email" name="adr_email" required
-                       placeholder="nom@egmail.com"
-                       class="w-full px-4 py-2.5 rounded-lg text-sm"/>
+                    placeholder="nom@egmail.com"
+                    class="w-full px-4 py-2.5 rounded-lg text-sm
+                        border border-gray-300 dark:border-gray-700
+                        bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
+                        focus:ring-2 focus:ring-blue-500 outline-none"/>
             </div>
 
             <!-- Boutons -->
