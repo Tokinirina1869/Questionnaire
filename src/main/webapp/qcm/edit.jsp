@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.monapp.model.Qcm" %>
 <!DOCTYPE html>
 <html lang="fr">
@@ -93,10 +93,11 @@
                 </label>
 
                 <select name="bonne_reponse"
-                    class="w-full px-4 py-2.5 rounded-lg text-sm
+                    class="w-full px-4 py-2.5 rounded-lg text-sm 
                         border border-gray-300 dark:border-gray-700
-                        bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
-                        focus:ring-2 focus:ring-blue-500 outline-none"/>
+                        bg-white dark:bg-gray-800 
+                        text-gray-900 dark:text-gray-100
+                        focus:ring-2 focus:ring-blue-500 outline-none">
                     <option class="dark:bg-gray-800" value="1" <%= q.getBonneReponse() == 1 ? "selected" : "" %> >Option 1</option>
                     <option class="dark:bg-gray-800" value="2" <%= q.getBonneReponse() == 2 ? "selected" : "" %> >Option 2</option>
                     <option class="dark:bg-gray-800" value="3" <%= q.getBonneReponse() == 3 ? "selected" : "" %> >Option 3</option>

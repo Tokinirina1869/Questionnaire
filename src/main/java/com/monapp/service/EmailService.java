@@ -35,14 +35,13 @@ public class EmailService {
             String contenu =
                 "<h2>Résultat de votre examen</h2>" +
                 "<p>Bonjour <strong>" + nomEtudiant + "</strong>,</p>" +
-                "<p>Votre note pour l'année <strong>" + anneeUniv +
+                "<p>La note théorique obtenue pour l'année universitaire <strong>" + anneeUniv +
                 "</strong> est :</p>" +
                 "<h1 style='color:" + (note >= 5 ? "green" : "red") + "'>" +
                 note + " / 10</h1>" +
                 "<p>" + (note >= 5 ? "Félicitations, vous êtes <strong>Admis</strong> !"
-                                   : "Vous êtes <strong>Ajourné</strong>.") +
-                "</p>" +
-                "<br/><p>qcm.app</p>";
+                                   : "Vous avez besoin des <strong>efforts</strong>.") +
+                "</p>";
 
                 message.setContent(contenu, "text/html; charset=UTF-8");
                 Transport.send(message);

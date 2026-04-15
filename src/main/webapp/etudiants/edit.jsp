@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.monapp.model.Etudiant" %>
 <!DOCTYPE html>
 <html lang="fr">
@@ -92,10 +92,11 @@
                     Niveau d'étude *
                 </label>
                 <select name="niveau"
-                        class="w-full px-4 py-2.5 rounded-lg text-sm
-                           border border-gray-300 dark:border-gray-700
-                           bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
-                           focus:ring-2 focus:ring-blue-500 outline-none"/>
+                    class="w-full px-4 py-2.5 rounded-lg text-sm 
+                        border border-gray-300 dark:border-gray-700
+                        bg-white dark:bg-gray-800 
+                        text-gray-900 dark:text-gray-100
+                        focus:ring-2 focus:ring-blue-500 outline-none">
                     <option class="dark:bg-gray-800" value="L1" <%= "L1".equals(e.getNiveau()) ? "selected" : "" %>>Licence 1 (L1)</option>
                     <option class="dark:bg-gray-800" value="L2" <%= "L2".equals(e.getNiveau()) ? "selected" : "" %>>Licence 2 (L2)</option>
                     <option class="dark:bg-gray-800" value="L3" <%= "L3".equals(e.getNiveau()) ? "selected" : "" %>>Licence 3 (L3)</option>

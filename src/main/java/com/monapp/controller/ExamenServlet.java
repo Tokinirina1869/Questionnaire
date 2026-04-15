@@ -76,6 +76,22 @@ public class ExamenServlet extends HttpServlet {
             request.setAttribute("examens", examService.listerExamen());
             request.getRequestDispatcher("/examen/resultat.jsp").forward(request, reponse);
         }
+        else if ("delete".equals(action)) {
+            try {
+                Integer id = Integer.parseInt(request.getParameter("id"));
+                System.out.println("Tentative de suppression de l'ID : " + id); // Debug
+                
+                examService.supprimerExam(id);
+                
+                reponse.sendRedirect(request.getContextPath() + "/examen?action=resultats&succes=delete");
+                return;
+            } 
+            catch (Exception e) {
+                // C'est ICI que la vraie erreur va s'afficher dans votre console
+                e.printStackTrace(); 
+            }
+            return;
+        }
         else {
             request.getRequestDispatcher("/examen/passer.jsp")
                     .forward(request, reponse);

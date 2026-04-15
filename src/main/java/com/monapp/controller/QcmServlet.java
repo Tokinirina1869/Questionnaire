@@ -53,37 +53,46 @@ public class QcmServlet extends HttpServlet {
     {
         request.setCharacterEncoding("UTF-8"); // Sécurité pour les accents
         String action = request.getParameter("action");
-        
-        try {
-            if ("ajouter".equals(action) || "modifier".equals(action)) {
-                String question = request.getParameter("question");
-                String reponse1 = request.getParameter("reponse1");
-                String reponse2 = request.getParameter("reponse2");
-                String reponse3 = request.getParameter("reponse3");
-                String reponse4 = request.getParameter("reponse4");
-                String brRaw = request.getParameter("bonne_reponse");
+        String successType = "";
 
-                if (brRaw != null && !brRaw.isEmpty()) {
-                    int bonneReponse = Integer.parseInt(brRaw);
-                    Qcm qcm = new Qcm(question, reponse1, reponse2, reponse3, reponse4, bonneReponse);
-                    
+        if ("ajouter".equals(action) || "modifier".equals(action)) {
+            
+            String question = request.getParameter("question");
+            String reponse1 = request.getParameter("reponse1");
+            String reponse2 = request.getParameter("reponse2");
+            String reponse3 = request.getParameter("reponse3");
+            String reponse4 = request.getParameter("reponse4");
+            String brRaw = request.getParameter("bonne_reponse");
+
+            if (brRaw != null && !brRaw.isEmpty()) {
+                int bonneReponse = Integer.parseInt(brRaw);
+                Qcm qcm = new Qcm(question, reponse1, reponse2, reponse3, reponse4, bonneReponse);
+                
+                try {
                     if ("ajouter".equals(action)) {
                         qService.ajouterQcm(qcm);
-                    } else {
+                        successType = "add";
+                    } 
+                    else {
                         // Pour la modification, n'oubliez pas de récupérer l'ID si nécessaire
                         String idRaw = request.getParameter("num_quest");
-                        if (idRaw != null) {
+                        if (idRaw != null && !idRaw.isEmpty()) {
                             qcm.setNumQuest(Integer.parseInt(idRaw));
+                            qService.modifierQcm(qcm);
+                            successType = "edit";
                         }
-                        qService.modifierQcm(qcm);
                     }
+
+                    response.sendRedirect(request.getContextPath() + "/qcm?succes=" + successType);
+                    return;
+                } 
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                    response.sendRedirect(request.getContextPath() + "/questions?erreur=db");
+                    return;
                 }
             }
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
         }
-
-        response.sendRedirect(request.getContextPath() + "/qcm");
     }
 
 }

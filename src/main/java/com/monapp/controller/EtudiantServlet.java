@@ -26,6 +26,12 @@ public class EtudiantServlet extends HttpServlet {
             String action = req.getParameter("action");
 
             if ("add".equals(action)) {
+                // 1. On génère le numéro via le service
+                String prochainNum = service.generateProchainNum();
+
+                // 2. On le met en attribut pour que la JSP puisse le lire
+                req.setAttribute("prochainNum", prochainNum);
+                
                 // → ouvre le formulaire vide
                 req.getRequestDispatcher("/etudiants/add.jsp")
                    .forward(req, response);
@@ -45,7 +51,7 @@ public class EtudiantServlet extends HttpServlet {
                 String id  = req.getParameter("id");       
                 Etudiant e = service.rechercherParNum(id); 
                 service.supprimer(e);                      
-                response.sendRedirect(req.getContextPath() + "/etudiants");
+                response.sendRedirect(req.getContextPath() + "/etudiants?succes=delete");
 
             } 
             else if ("search".equals(action)) {
@@ -98,29 +104,34 @@ public class EtudiantServlet extends HttpServlet {
     {
 
         String action = request.getParameter("action");
+        String succesType = "";
 
-        if ("ajouter".equals(action)) {
-            String numEtudiant = request.getParameter("num_etudiant");
-            String nom         = request.getParameter("nom");
-            String prenoms     = request.getParameter("prenoms");
-            String niveau      = request.getParameter("niveau");
-            String adrEmail    = request.getParameter("adr_email");
-
-            Etudiant e = new Etudiant(numEtudiant, nom, prenoms, niveau, adrEmail);
-            service.ajouter(e);
-
-        } else if ("modifier".equals(action)) {
-            String numEtudiant = request.getParameter("num_etudiant");
-            String nom         = request.getParameter("nom");
-            String prenoms     = request.getParameter("prenoms");
-            String niveau      = request.getParameter("niveau");
-            String adrEmail    = request.getParameter("adr_email");
-
-            Etudiant e = new Etudiant(numEtudiant, nom, prenoms, niveau, adrEmail);
-            service.modifier(e);
-        }
-
-        response.sendRedirect(request.getContextPath() + "/etudiants");
+        String numEtudiant = request.getParameter("num_etudiant");
+        String nom         = request.getParameter("nom");
+        String prenoms     = request.getParameter("prenoms");
+        String niveau      = request.getParameter("niveau");
+        String adrEmail    = request.getParameter("adr_email");
         
+        Etudiant e = new Etudiant(numEtudiant, nom, prenoms, niveau, adrEmail);
+
+        try {
+            if ("ajouter".equals(action)) {
+                service.ajouter(e);
+                succesType = "add";
+
+            } 
+            else if ("modifier".equals(action)) {
+                service.modifier(e);
+                succesType = "edit";
+            }
+
+            response.sendRedirect(request.getContextPath() + "/etudiants?succes=" + succesType);
+        
+        } 
+        catch (Exception ex) {
+            ex.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/etudiants?erreur=true");
+               
+        }
     }
 }

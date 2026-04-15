@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" %>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -41,14 +42,16 @@
             <!-- Numéro étudiant -->
             <div class="space-y-1">
                 <label class="text-xs font-bold tracking-wider">
-                    Numéro Étudiant *
+                    Numéro Étudiant (Auto-généré)
                 </label>
-                <input type="text" name="num_etudiant" required
-                    placeholder="Ex: ETU-001"
+                <input type="text" name="num_etudiant"
+                    readonly
+                    value="${not empty prochainNum ? prochainNum : '0000 H-F'}"
                     class="w-full px-4 py-2.5 rounded-lg text-sm
                         border border-gray-300 dark:border-gray-700
                         bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
                         focus:ring-2 focus:ring-blue-500 outline-none"/>
+                    <p class="text-[10px] text-gray-400">Ce numéro est attribué automatiquement.</p>
             </div>
 
             <!-- Nom et Prénoms -->

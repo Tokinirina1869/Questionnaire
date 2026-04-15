@@ -3,6 +3,7 @@ package com.monapp.repository;
 import com.monapp.model.Etudiant;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import jakarta.persistence.PersistenceContext;
 import java.util.List;
 
@@ -12,6 +13,7 @@ public class EtudiantRepository {
     private EntityManager em;
 
     //CREATE = Insert into etudiant ...
+    @Transactional
     public void save(Etudiant e) 
     {
         em.persist(e); // persist = inserer en BD
@@ -36,6 +38,7 @@ public class EtudiantRepository {
     }
 
     // Delete
+    @Transactional
     public void delete(Etudiant etu) 
     {
         Etudiant e = find(etu.getNumEtudiant());
@@ -56,5 +59,22 @@ public class EtudiantRepository {
             Etudiant.class)
             .setParameter("q", "%" + query + "%")
             .getResultList();
+    }
+
+    public String generateProchainNum()
+    {
+        try {
+            String jpql = "SELECT MAX(e.numEtudiant) FROM Etudiant e";
+            String maxId = (String) em.createQuery(jpql).getSingleResult();
+
+            int nextVal = 1;
+            if (maxId != null && maxId.length() >= 4) {
+                nextVal = Integer.parseInt(maxId.substring(0, 4)) + 1;
+            }
+
+            return String.format("%04d H-F", nextVal);
+        } catch (Exception e) {
+            return "0001 H-F";
+        }
     }
 }

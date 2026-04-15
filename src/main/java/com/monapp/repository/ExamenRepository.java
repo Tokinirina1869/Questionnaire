@@ -27,4 +27,14 @@ public class ExamenRepository {
     {
         return em.find(Examen.class, id);
     }
+    
+    @Transactional
+    public void delete(Integer id)
+    {
+        Examen exam = em.find(Examen.class, id);
+
+        if (exam != null) {
+            em.remove(exam);
+        }
+    }
 }

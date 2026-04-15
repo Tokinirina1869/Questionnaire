@@ -24,4 +24,8 @@ public class ExamenService {
     {
         return repoExam.findById(id);
     }
+    public void supprimerExam(Integer id)
+    {
+        repoExam.delete(id);
+    }
 }

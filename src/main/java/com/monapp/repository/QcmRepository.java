@@ -5,6 +5,7 @@ import com.monapp.model.Qcm;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import java.util.List;
 
 @Stateless
@@ -13,6 +14,7 @@ public class QcmRepository {
     @PersistenceContext
     private EntityManager em;
 
+    @Transactional
     public void save(Qcm qcm)
     {
         em.persist(qcm);
@@ -38,6 +40,7 @@ public class QcmRepository {
         return em.merge(qcm);
     }
 
+    @Transactional
     public void delete(Integer id)
     {
         Qcm qcm = em.find(Qcm.class, id);

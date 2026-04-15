@@ -61,13 +61,17 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
-                                <td class="text-center">
+                                <td class="text-center flex justify-between">
                                     <a href="${pageContext.request.contextPath}/examen?action=envoyer&numExam=${ex.numExam}"
                                         onclick="return confirm('Envoyer la note à ${ex.etudiant.nom} ?')"
                                         class="bg-green-600 hover:bg-green-700 text-white text-xs 
                                             px-3 py-1.5 rounded-lg transition-all inline-block">
                                         Envoyer
                                     </a>
+                                    <button class="bg-red-600 hover:bg-green-700 text-white text-xs
+                                        px-3 py-1.5 rounded-lg transition-all inline-block">
+                                        Supprimer
+                                    </button>
                                 </td>
                             </tr>
                         </c:forEach>

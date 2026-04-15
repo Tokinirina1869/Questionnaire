@@ -27,13 +27,13 @@
     }
 </style>
 
-<nav class="flex items-center justify-between px-8 py-4 border-b bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 transition-colors duration-300">
+<nav class="sticky top-0 z-50 flex items-center justify-between px-8 py-4 border-b bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 transition-colors duration-300">
 
     <div class="flex items-center gap-2">
         <img src="${pageContext.request.contextPath}/images/qcm.png"
             class="rounded-lg h-10 w-10 object-contain" alt="logo" />
         <span class="font-mono text-3xl uppercase">
-            <span class="text-white">qcm</span>
+            qcm
         </span>
     </div>
 

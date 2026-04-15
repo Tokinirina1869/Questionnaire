@@ -42,4 +42,9 @@ public class EtudiantService {
         
         return repo.search(query);
     }
+
+    public String generateProchainNum()
+    {
+        return repo.generateProchainNum();
+    }
 }

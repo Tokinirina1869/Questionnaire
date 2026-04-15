@@ -1,7 +1,28 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.monapp.model.Etudiant" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
+<c:if test="${not empty param.succes}" >
+    <div id="toast-success"
+        class="fixed bottom-5 right-5 z-[100] flex items-center w-full max-w-xs p-4
+            text-gray-700 bg-white rounded-lg shadow-2xl border-l-4 border-green-800
+            dark:bg-gray-800 dark:text-gray-300">
+        <div class="ml-3 text-sm font-normal">
+            <c:choose>
+                <c:when test="${param.succes == 'add'}">Ajout de nouveau étudiant avec succès:</c:when>
+                <c:when test="${param.succes == 'edit'}">Modification aves succès!</c:when>
+                <c:when test="${param.succes == 'delete'}">Suppression réussie:</c:when>
+            </c:choose>
+        </div>
+        <button type="button" onclick="this.parentElement.remove()" class="ml-auto text-gray-400">
+            <svg class="w-3 h-3" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/></svg>
+        </button>
+    </div>
+    <script>
+        setTimeout(()  => { document.getElementById('toast-success')?.remove(); }, 5000);
+    </script>
+</c:if>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -53,7 +74,7 @@
             <!-- Tableau -->
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
-                    <thead class="text-xs text-center">
+                    <thead class="bg-blue-800 dark:bg-blue-900 text-white text-center">
                         <tr>
                             <th class="px-6 py-4">Matricule</th>
                             <th class="px-6 py-4">Nom & Prénoms</th>
@@ -68,14 +89,12 @@
                                 <c:forEach var="e" items="${etudiants}" >
                                     <tr>
                                         <tr>
-                                            <td class="px-6 py-4 font-mono text-blue-400 text-sm">
+                                            <td class="px-6 py-4 text-center font-mono text-blue-400 text-sm">
                                                 ${e.numEtudiant}
                                             </td>
-                                            <td class="px-6 py-4">
-                                                <div class="flex flex-col">
-                                                    <span class="font-medium">${e.nom}</span>
-                                                    <span class="text-xs ">${e.prenoms}</span>
-                                                </div>
+                                            <td class="px-6 py-4 text-center">
+                                                <span class="font-medium">${e.nom}</span>
+                                                <span class="text-xs ">${e.prenoms}</span>
                                             </td>
                                             <td class="px-6 py-4 text-center">
                                                 <span class="px-2 py-1 text-blue-300 rounded-md text-xs 
@@ -83,7 +102,7 @@
                                                     ${e.niveau}
                                                 </span>
                                             </td>
-                                            <td class="px-6 py-4 text-sm italic">
+                                            <td class="px-6 py-4 text-sm text-center italic">
                                                 ${e.email}
                                             </td>
                                             <td class="px-6 py-4">
