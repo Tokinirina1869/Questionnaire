@@ -77,4 +77,11 @@ public class EtudiantRepository {
             return "0001 H-F";
         }
     }
+
+    public Long countEtudiant()
+    {
+        Long count = em.createQuery("SELECT COUNT(e) FROM Etudiant e", Long.class).getSingleResult();
+        
+        return count;
+    }
 }

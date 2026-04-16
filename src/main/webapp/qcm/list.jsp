@@ -10,9 +10,9 @@
             dark:bg-gray-800 dark:text-gray-300">
         <div class="ml-3 text-sm font-normal">
             <c:choose>
-                <c:when test="${param.succes == 'add'}">Ajout de nouvelle question avec succès:</c:when>
-                <c:when test="${param.succes == 'edit'}">Modification aves succès!</c:when>
-                <c:when test="${param.succes == 'delete'}">Suppression réussie:</c:when>
+                <c:when test="${param.succes == 'add'}">Ajout de nouvelle question avec succès !</c:when>
+                <c:when test="${param.succes == 'edit'}">Question modifiée aves succès !</c:when>
+                <c:when test="${param.succes == 'delete'}">Question supprimée avec réussite !</c:when>
             </c:choose>
         </div>
         <button type="button" onclick="this.parentElement.remove()" class="ml-auto text-gray-400">
@@ -47,7 +47,7 @@
             </a>
         </div>
 
-        <div class="border shadow-xl overflow-hidden">
+        <div class="bg-white dark:bg-gray-900 rounded-xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-800">
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
                     <thead class="bg-blue-800 dark:bg-blue-900 text-white text-center">

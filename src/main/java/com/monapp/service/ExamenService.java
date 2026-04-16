@@ -28,4 +28,22 @@ public class ExamenService {
     {
         repoExam.delete(id);
     }
+
+    public Long countExamen()
+    {
+        return repoExam.countExam();
+    }
+    public Long plus5()
+    {
+        return repoExam.countPlusDe5();
+    }
+
+    public Long moin5()
+    {
+        return repoExam.countMoinsDe5();
+    }
+    public Double moyenne()
+    {
+        return repoExam.getMoyenneGenerale();
+    }
 }

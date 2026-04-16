@@ -38,7 +38,7 @@ public class QcmServlet extends HttpServlet {
         if ("delete".equals(action)) {
             Integer id = Integer.parseInt(request.getParameter("id"));
             qService.supprimerQcm(id);
-            response.sendRedirect(request.getContextPath() + "/qcm");
+            response.sendRedirect(request.getContextPath() + "/qcm?succes=delete");
             return;
         }
 

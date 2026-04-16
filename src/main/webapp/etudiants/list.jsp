@@ -10,9 +10,9 @@
             dark:bg-gray-800 dark:text-gray-300">
         <div class="ml-3 text-sm font-normal">
             <c:choose>
-                <c:when test="${param.succes == 'add'}">Ajout de nouveau étudiant avec succès:</c:when>
-                <c:when test="${param.succes == 'edit'}">Modification aves succès!</c:when>
-                <c:when test="${param.succes == 'delete'}">Suppression réussie:</c:when>
+                <c:when test="${param.succes == 'add'}">Ajout de nouveau étudiant avec succès !</c:when>
+                <c:when test="${param.succes == 'edit'}">Information d'un étudiant modifié !</c:when>
+                <c:when test="${param.succes == 'delete'}">Etudiant supprimé dans la base de données !</c:when>
             </c:choose>
         </div>
         <button type="button" onclick="this.parentElement.remove()" class="ml-auto text-gray-400">

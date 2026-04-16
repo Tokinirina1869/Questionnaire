@@ -11,7 +11,7 @@
         <div class="ml-3 text-sm font-normal">
             <c:choose>
                 <c:when test="${param.succes == 'email'}">Email envoyé avec succès !</c:when>
-                <c:when test="${param.succes == 'delete'}">Examen supprimé avec succès !</c:when>
+                <c:when test="${param.succes == 'delete'}">Etudiant supprimé sur la liste du classement !</c:when>
             </c:choose>
         </div>
         

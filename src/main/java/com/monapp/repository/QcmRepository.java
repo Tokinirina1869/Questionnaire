@@ -49,4 +49,9 @@ public class QcmRepository {
         }
     }
 
+    public Long countQcm()
+    {
+        Long count = em.createQuery("SELECT COUNT(q) FROM Qcm q", Long.class).getSingleResult();
+        return count;
+    }
 }

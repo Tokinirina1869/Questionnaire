@@ -47,4 +47,9 @@ public class EtudiantService {
     {
         return repo.generateProchainNum();
     }
+
+    public Long countEtudiant()
+    {
+       return repo.countEtudiant();
+    }
 }

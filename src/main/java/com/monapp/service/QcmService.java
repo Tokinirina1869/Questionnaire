@@ -43,4 +43,9 @@ public class QcmService {
     {
         return repoQcm.findRandom10();
     }
+
+    public Long countQcm()
+    {
+        return repoQcm.countQcm();
+    }
 }

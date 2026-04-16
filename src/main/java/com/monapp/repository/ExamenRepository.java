@@ -37,4 +37,24 @@ public class ExamenRepository {
             em.remove(exam);
         }
     }
+
+    public Long countExam()
+    {
+        Long count = em.createQuery("SELECT COUNT(ex) FROM Examen ex", Long.class).getSingleResult();
+        return count;
+    }
+    public Long countMoinsDe5() {
+        return em.createQuery("SELECT COUNT(e) FROM Examen e WHERE e.note < 5", Long.class)
+                .getSingleResult();
+    }
+
+    public Long countPlusDe5() {
+        return em.createQuery("SELECT COUNT(e) FROM Examen e WHERE e.note >= 5", Long.class)
+                .getSingleResult();
+    }
+
+    public Double getMoyenneGenerale() {
+        return em.createQuery("SELECT AVG(e.note) FROM Examen e", Double.class)
+                .getSingleResult();
+    }
 }
