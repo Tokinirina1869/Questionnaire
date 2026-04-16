@@ -74,11 +74,34 @@
             <span id="iconLight" class="hidden">🌙</span>
         </button>
 
-        <div class="text-xs font-mono bg-gray-50 dark:bg-gray-800 px-3 py-1.5 rounded-full text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-700">
-            <%= java.time.Year.now().getValue() - 1 %>-<%= java.time.Year.now().getValue() %>
+        <div class="flex items-center space-x-2">
+            <div class="flex items-center text-xs font-mono bg-gray-50 dark:bg-gray-800 px-3 py-1.5 rounded-full
+                text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-700">
+                <i class="bi bi-clock-fill mr-2 text-blue-500"></i>
+                <span id="horloge"></span>
+            </div>
         </div>
     </div>
 </nav>
+
+<script>
+    function actualiserHeure() {
+        const maintenant = new Date();
+        
+        // Configuration du format
+        const optionsDate = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        const date = maintenant.toLocaleDateString('fr-FR', optionsDate);
+        
+        const heures = String(maintenant.getHours()).padStart(2, '0');
+        const minutes = String(maintenant.getMinutes()).padStart(2, '0');
+        
+        document.getElementById('horloge').innerText = date + " à " + heures + ":" + minutes;
+    }
+
+    // Appeler immédiatement et rafraîchir toutes les minutes
+    actualiserHeure();
+    setInterval(actualiserHeure, 60000); 
+</script>
 
 <script>
     const toggleBtn = document.getElementById("themeToggle");
