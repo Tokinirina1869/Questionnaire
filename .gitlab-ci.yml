@@ -4,7 +4,7 @@ stages:
 job_test:
   stage: build
   tags:
-    - pc-toki  # Remplace par le tag exact que tu as mis sur GitLab
+    - pc-toki
   script:
     - echo "Début du build sur mon PC..."
     - mvn --version
