@@ -6,5 +6,5 @@ job_test:
   tags:
     - pc-toki
   script:
-    - echo "Début du build sur mon PC..."
+    - echo "Debut du build sur mon PC..."
     - echo "Runner OK - Pipeline fonctionne bien!"
