@@ -5,12 +5,16 @@ stages:
 
 build-job:
   stage: build
+  tags:
+    - pc-toki
   script:
     - echo "Compiling the code..."
     - echo "Compile complete!"
 
 unit-test-job:
   stage: test
+  tags:
+    - pc-toki
   script: 
     - echo "Running unit tests... This will take about 60 seconds."
     - sleep 60
@@ -18,6 +22,8 @@ unit-test-job:
   
 lint-test-job:
   stage: test
+  tags:
+    - pc-toki
   script:
     - echo "Linting coe... This will take about 10 seconds."
     - sleep 15
@@ -25,6 +31,8 @@ lint-test-job:
 
 deloy-job:
   stage: deploy
+  tags:
+    - pc-toki
   environment: production
   script:
     - echo "Deploying application..."
