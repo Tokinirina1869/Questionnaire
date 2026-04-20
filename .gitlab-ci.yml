@@ -3,8 +3,6 @@ stages:
 
 job_test:
   stage: build
-  tags:
-    - pc-toki
   script:
     - echo "Debut du build sur mon PC..."
     - echo "Runner OK - Pipeline fonctionne bien!"
