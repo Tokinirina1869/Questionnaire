@@ -1,12 +1,29 @@
-name: Build
+name: SonarCloud Analysis
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+      - master  # Ajoute master si tu travailles encore dessus
 
 jobs:
-  job_test:
+  build:
+    name: Build and analyze
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Important : permet à SonarCloud de voir l'historique de tes commits
 
-      - name: Test Runner
-        run: echo "Runner OK - Pipeline fonctionne bien!"
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatique, rien à configurer dans GitHub
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}    # Celui que tu as ajouté dans les Secrets
+        run: mvn -B verify sonar:sonar
