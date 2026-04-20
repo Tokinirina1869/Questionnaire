@@ -1,0 +1,8 @@
+stages:
+  - build
+
+job_test:
+  stage: build
+  script:
+    - echo "Debut du build sur mon PC..."
+    - echo "Runner OK - Pipeline fonctionne bien!"
