@@ -65,7 +65,7 @@
                             bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
                             focus:ring-2 focus:ring-blue-500 outline-none"/>
                     <button type="submit"
-                            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm 
+                            class="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-lg text-sm 
                                    font-medium transition-colors flex items-center gap-2">
                         <i class="bi bi-search"></i> Rechercher
                     </button>
@@ -79,42 +79,41 @@
                         <%-- On boucle sur la Map : 'entry.key' est le Niveau, 'entry.value' est la Liste d'étudiants --%>
                         <c:forEach var="entry" items="${groupes}">
                             
-                            <details class="group bg-[#0f172a] border border-slate-800 rounded-xl overflow-hidden shadow-lg" open>
-                                <summary class="flex items-center justify-between p-5 cursor-pointer hover:bg-slate-800/50 transition-all list-none">
-                                    <span class="text-lg font-bold text-white tracking-wide">${entry.key}</span>
+                            <details class="group bg-white dark:bg-gray-800 dark:text-gray-100 border border-slate-800 rounded-xl overflow-hidden shadow-lg" open>
+                                <summary class="flex items-center justify-between p-5 cursor-pointer transition-all list-none">
+                                    <span class="text-lg font-bold tracking-wide">${entry.key}</span>
                                     
                                     <div class="flex items-center gap-4">
                                         <%-- Affichage dynamique du nombre d'étudiants via fn:length --%>
-                                        <span class="bg-blue-900/30 text-blue-400 px-4 py-1 rounded-full text-xs font-bold border border-blue-500/20">
-                                            ${fn:length(entry.value)} candidats
+                                        <span class="bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-bold border">
+                                            ${fn:length(entry.value)} étudiants
                                         </span>
                                         <i class="bi bi-chevron-down text-slate-500 group-open:rotate-180 transition-transform"></i>
                                     </div>
                                 </summary>
 
-                                <div class="px-5 pb-5 border-t border-slate-800/50 bg-[#0f172a]">
+                                <div class="px-5 pb-5 border-t border-slate-800/50 bg-white dark:bg-gray-900 dark:text-gray-100 text-gray-900">
                                     <table class="w-full text-left mt-4">
-                                        <thead class="text-slate-500 text-[11px] uppercase tracking-[0.2em] border-b border-slate-800">
+                                        <thead class="text-gray-600 dark:text-gray-400 text-lg hover:bg-gray-100 dark:hover:bg-gray-800">
                                             <tr>
-                                                <th class="pb-3 font-semibold">Matricule</th>
-                                                <th class="pb-3 font-semibold">Nom & Prénoms</th>
-                                                <th class="pb-3 font-semibold text-center">Email</th>
-                                                <th class="pb-3 font-semibold text-right">Actions</th>
+                                                <th class="pb-3 text-center font-semibold">N° Matricule</th>
+                                                <th class="pb-3 text-center font-semibold">Nom</th>
+                                                <th class="pb-3 text-center font-semibold">Prénoms</th>
+                                                <th class="pb-3 text-center font-semibold text-center">Email</th>
+                                                <th class="pb-3 text-center font-semibold text-right">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody class="divide-y divide-slate-800/50">
                                             <c:forEach var="e" items="${entry.value}">
-                                                <tr class="group/row hover:bg-slate-800/20 transition-colors">
-                                                    <td class="py-4 font-mono text-blue-400 text-sm">${e.numEtudiant}</td>
-                                                    <td class="py-4 text-slate-200">
-                                                        <span class="font-bold">${e.nom}</span> 
-                                                        <span class="text-slate-500 text-xs ml-1">${e.prenoms}</span>
-                                                    </td>
-                                                    <td class="py-4 text-sm italic text-slate-400 text-center">${e.email}</td>
-                                                    <td class="py-4">
+                                                <tr class="group/row transition-colors">
+                                                    <td class="py-4 text-center font-mono text-blue-400 text-sm">${e.numEtudiant}</td>
+                                                    <td class="py-4 text-center uppercase text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800">${e.nom}</td>
+                                                    <td class="py-4 text-center text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800">${e.prenoms}</td>
+                                                    <td class="py-4 text-center text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-center">${e.email}</td>
+                                                    <td class="py-4 text-center">
                                                         <div class="flex justify-end gap-4">
                                                             <a href="?action=edit&id=${e.numEtudiant}" 
-                                                            class="text-amber-500/80 hover:text-amber-400 transition-colors">
+                                                                class="text-amber-500/80 hover:text-amber-400 transition-colors">
                                                                 <i class="bi bi-pencil-square text-lg"></i>
                                                             </a>
                                                             <button onclick="deleteStudent('${e.numEtudiant}')" 

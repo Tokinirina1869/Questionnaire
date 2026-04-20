@@ -57,6 +57,7 @@
            class="${base} ${uri.contains('/examen') && currentAction == 'passer' ? active : inactive}">
             Examen
         </a>
+        
         <a href="${pageContext.request.contextPath}/qcm"
            class="${base} ${uri.contains('/qcm') ? active : inactive}">
             QCM
