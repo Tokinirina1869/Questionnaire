@@ -1,39 +1,11 @@
 stages:
   - build
-  - test
-  - deploy
 
-build-job:
+job_test:
   stage: build
   tags:
-    - pc-toki
+    - pc-toki  # Remplace par le tag exact que tu as mis sur GitLab
   script:
-    - echo "Compiling the code..."
-    - echo "Compile complete!"
-
-unit-test-job:
-  stage: test
-  tags:
-    - pc-toki
-  script: 
-    - echo "Running unit tests... This will take about 60 seconds."
-    - sleep 60
-    - echo "Code coverage is 90%"
-  
-lint-test-job:
-  stage: test
-  tags:
-    - pc-toki
-  script:
-    - echo "Linting coe... This will take about 10 seconds."
-    - sleep 15
-    - echo "No lint issues found."
-
-deloy-job:
-  stage: deploy
-  tags:
-    - pc-toki
-  environment: production
-  script:
-    - echo "Deploying application..."
-    - echo "Application successfully deployed."
+    - echo "Début du build sur mon PC..."
+    - mvn --version
+    - mvn clean compile
