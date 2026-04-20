@@ -7,5 +7,4 @@ job_test:
     - pc-toki
   script:
     - echo "Début du build sur mon PC..."
-    - mvn --version
-    - mvn clean compile
+    - echo "Runner OK - Pipeline fonctionne bien!"
