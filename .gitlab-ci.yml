@@ -9,3 +9,4 @@ job_test:
     - echo "Début du build sur mon PC Linux Mint..."
     - mvn --version
     - mvn clean compile
+    - echo "Fin du build sur mon PC Linux Mint..."
