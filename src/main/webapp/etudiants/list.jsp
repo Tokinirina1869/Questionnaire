@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.monapp.model.Etudiant" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:if test="${not empty param.succes}" >
     <div id="toast-success"
@@ -64,7 +65,7 @@
                             bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
                             focus:ring-2 focus:ring-blue-500 outline-none"/>
                     <button type="submit"
-                            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm 
+                            class="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-lg text-sm 
                                    font-medium transition-colors flex items-center gap-2">
                         <i class="bi bi-search"></i> Rechercher
                     </button>
@@ -72,73 +73,71 @@
             </div>
 
             <!-- Tableau -->
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                    <thead class="bg-blue-800 dark:bg-blue-900 text-white text-center">
-                        <tr>
-                            <th class="px-6 py-4">Matricule</th>
-                            <th class="px-6 py-4">Nom & Prénoms</th>
-                            <th class="px-6 py-4">Niveau</th>
-                            <th class="px-6 py-4">Email</th>
-                            <th class="px-6 py-4">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="devide-y">
-                        <c:choose>
-                            <c:when test="${not empty etudiants}">
-                                <c:forEach var="e" items="${etudiants}" >
-                                    <tr>
-                                        <tr>
-                                            <td class="px-6 py-4 text-center font-mono text-blue-400 text-sm">
-                                                ${e.numEtudiant}
-                                            </td>
-                                            <td class="px-6 py-4 text-center">
-                                                <span class="font-medium">${e.nom}</span>
-                                                <span class="text-xs ">${e.prenoms}</span>
-                                            </td>
-                                            <td class="px-6 py-4 text-center">
-                                                <span class="px-2 py-1 text-blue-300 rounded-md text-xs 
-                                                            font-bold border border-blue-800/50">
-                                                    ${e.niveau}
-                                                </span>
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-center italic">
-                                                ${e.email}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                <div class="flex justify-center items-center gap-3">
-                                                    <!-- Bouton Modifier → edit.jsp -->
-                                                    <a href="${pageContext.request.contextPath}/etudiants?action=edit&id=${e.numEtudiant}"
-                                                    class="p-2 text-amber-400 hover:bg-amber-500/10 rounded-lg 
-                                                            transition-colors" title="Modifier">
-                                                        <i class="bi bi-pencil-square"></i>
-                                                    </a>
-                                                    <!-- Bouton Supprimer -->
-                                                    <button onclick="deleteStudent('${e.numEtudiant}')"
-                                                            class="p-2 text-red-400 hover:bg-red-500/10 rounded-lg 
-                                                                transition-colors" title="Supprimer">
-                                                        <i class="bi bi-trash"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tr>
-                                </c:forEach>
-                            </c:when>
+            <div class="space-y-4 p-4">
+                <c:choose>
+                    <c:when test="${not empty groupes}">
+                        <%-- On boucle sur la Map : 'entry.key' est le Niveau, 'entry.value' est la Liste d'étudiants --%>
+                        <c:forEach var="entry" items="${groupes}">
+                            
+                            <details class="group bg-white dark:bg-gray-800 dark:text-gray-100 border border-slate-800 rounded-xl overflow-hidden shadow-lg" open>
+                                <summary class="flex items-center justify-between p-5 cursor-pointer transition-all list-none">
+                                    <span class="text-lg font-bold tracking-wide">${entry.key}</span>
+                                    
+                                    <div class="flex items-center gap-4">
+                                        <%-- Affichage dynamique du nombre d'étudiants via fn:length --%>
+                                        <span class="bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-bold border">
+                                            ${fn:length(entry.value)} étudiants
+                                        </span>
+                                        <i class="bi bi-chevron-down text-slate-500 group-open:rotate-180 transition-transform"></i>
+                                    </div>
+                                </summary>
 
-                            <c:otherwise>
-                                <tr>
-                                    <td colspan="5" class="px-6 py-12 text-center text-gray-500">
-                                        <div class="flex flex-col items-center gap-2">
-                                            <i class="bi bi-folder2-open text-4xl"></i>
-                                            <p>Aucun étudiant trouvé dans la base de données.</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </c:otherwise>
-                        </c:choose>
-                    </tbody>
-                </table>
+                                <div class="px-5 pb-5 border-t border-slate-800/50 bg-white dark:bg-gray-900 dark:text-gray-100 text-gray-900">
+                                    <table class="w-full text-left mt-4">
+                                        <thead class="text-gray-600 dark:text-gray-400 text-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                                            <tr>
+                                                <th class="pb-3 text-center font-semibold">N° Matricule</th>
+                                                <th class="pb-3 text-center font-semibold">Nom</th>
+                                                <th class="pb-3 text-center font-semibold">Prénoms</th>
+                                                <th class="pb-3 text-center font-semibold text-center">Email</th>
+                                                <th class="pb-3 text-center font-semibold text-right">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-slate-800/50">
+                                            <c:forEach var="e" items="${entry.value}">
+                                                <tr class="group/row transition-colors">
+                                                    <td class="py-4 text-center font-mono text-blue-400 text-sm">${e.numEtudiant}</td>
+                                                    <td class="py-4 text-center uppercase text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800">${e.nom}</td>
+                                                    <td class="py-4 text-center text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800">${e.prenoms}</td>
+                                                    <td class="py-4 text-center text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-center">${e.email}</td>
+                                                    <td class="py-4 text-center">
+                                                        <div class="flex justify-end gap-4">
+                                                            <a href="?action=edit&id=${e.numEtudiant}" 
+                                                                class="text-amber-500/80 hover:text-amber-400 transition-colors">
+                                                                <i class="bi bi-pencil-square text-lg"></i>
+                                                            </a>
+                                                            <button onclick="deleteStudent('${e.numEtudiant}')" 
+                                                                    class="text-red-500/80 hover:text-red-400 transition-colors">
+                                                                <i class="bi bi-trash text-lg"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </details>
+                            
+                        </c:forEach>
+                    </c:when>
+
+                    <c:otherwise>
+                        <div class="text-center py-20 bg-slate-900 rounded-xl border border-dashed border-slate-800">
+                            <p class="text-slate-500">Aucune donnée disponible.</p>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </main>

@@ -1,11 +1,28 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<c:if test="${param.succes == 'email'}">
-    <div class="mb-4 p-4 bg-green-100 dark:bg-green-900/30 border border-green-400 
-                rounded-lg text-green-700 dark:text-green-300 text-sm">
-        Email envoyé avec succès !
+<%-- Dans resultat.jsp --%>
+<c:if test="${not empty param.succes}">
+    <div id="toast-success" 
+         class="fixed bottom-5 right-5 z-[100] flex items-center w-full max-w-xs p-4 
+                text-gray-700 bg-white rounded-lg shadow-2xl border-l-4 border-green-800
+                dark:bg-gray-800 dark:text-gray-300">
+        
+        <div class="ml-3 text-sm font-normal">
+            <c:choose>
+                <c:when test="${param.succes == 'email'}">Email envoyé avec succès !</c:when>
+                <c:when test="${param.succes == 'delete'}">Etudiant supprimé sur la liste du classement !</c:when>
+            </c:choose>
+        </div>
+        
+        <button type="button" onclick="this.parentElement.remove()" class="ml-auto text-gray-400">
+            <svg class="w-3 h-3" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/></svg>
+        </button>
     </div>
+
+    <script>
+        setTimeout(() => { document.getElementById('toast-success')?.remove(); }, 4000);
+    </script>
 </c:if>
 
 <!DOCTYPE html>
@@ -44,10 +61,10 @@
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-800"> 
                         <c:forEach var="ex" items="${examens}" varStatus="st">
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-                                <td class="py-4 text-center font-bold">${st.count}</td>
+                            <tr>
+                                <td class="py-4 text-center">${st.count}</td>
                                 <td class="text-center text-sm font-mono text-blue-600 dark:text-blue-400">${ex.etudiant.numEtudiant}</td>
-                                <td class="text-center text-sm font-medium">${ex.etudiant.nom} ${ex.etudiant.prenoms}</td>
+                                <td class="text-center text-sm">${ex.etudiant.nom} ${ex.etudiant.prenoms}</td>
                                 <td class="text-center text-sm italic text-gray-600 dark:text-gray-400">${ex.etudiant.email}</td>
                                 <td class="text-center text-sm">${ex.anneeUniv}</td>
                                 <td class="fw-bold text-center text-lg text-blue-700 dark:text-blue-300">${ex.note}</td>
@@ -61,15 +78,15 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
-                                <td class="text-center flex justify-between">
+                                <td class="text-center flex justify-center gap-2 py-3">
                                     <a href="${pageContext.request.contextPath}/examen?action=envoyer&numExam=${ex.numExam}"
-                                        onclick="return confirm('Envoyer la note à ${ex.etudiant.nom} ?')"
-                                        class="bg-green-600 hover:bg-green-700 text-white text-xs 
-                                            px-3 py-1.5 rounded-lg transition-all inline-block">
+                                    onclick="return confirm('Envoyer la note à ${ex.etudiant.nom} ?')"
+                                    class="bg-green-600 hover:bg-green-700 text-white text-xs px-3 py-1.5 rounded-lg transition-all">
                                         Envoyer
                                     </a>
-                                    <button class="bg-red-600 hover:bg-green-700 text-white text-xs
-                                        px-3 py-1.5 rounded-lg transition-all inline-block">
+                                    <button onclick="deleteExam('${ex.numExam}')" 
+                                            class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1.5 rounded-lg transition-all" 
+                                            title="Supprimer">
                                         Supprimer
                                     </button>
                                 </td>
@@ -88,5 +105,12 @@
         </div>
     </div>
     
+    <script>
+        function deleteExam(id){
+            if(confirm("Voulez-vous vraiement supprimer cet étudiant " + id + " ?")){
+                window.location.href = "<%= request.getContextPath() %>/examen?action=delete&id=" + id;
+            }
+        }
+    </script>
 </body>
 </html>

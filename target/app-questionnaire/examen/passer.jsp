@@ -40,10 +40,11 @@
                 <div>
                     <label class="text-xs font-bold uppercase">Étudiant</label>
                     <select name="num_etudiant" required
-                        class="w-full px-4 py-2.5 rounded-lg text-sm
-                            border border-gray-300 dark:border-gray-700
-                            bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
-                            focus:ring-2 focus:ring-blue-500 outline-none"/>
+                        class="w-full px-4 py-2.5 rounded-lg text-sm 
+                        border border-gray-300 dark:border-gray-700
+                        bg-white dark:bg-gray-800 
+                        text-gray-900 dark:text-gray-100
+                        focus:ring-2 focus:ring-blue-500 outline-none">
                         <option value="">-- Choisir un étudiant --</option>
                         <% for (Etudiant e : etudiants) { %>
                             <option value="<%= e.getNumEtudiant() %>">

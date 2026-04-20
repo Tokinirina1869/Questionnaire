@@ -8,6 +8,7 @@
 /home/tokijr/Documents/app-questionnaire/src/main/java/com/monapp/controller/QcmServlet.java
 /home/tokijr/Documents/app-questionnaire/src/main/java/com/monapp/repository/ExamenRepository.java
 /home/tokijr/Documents/app-questionnaire/src/main/java/com/monapp/service/QcmService.java
+/home/tokijr/Documents/app-questionnaire/src/main/java/com/monapp/controller/DashBoardServlet.java
 /home/tokijr/Documents/app-questionnaire/src/main/java/com/monapp/controller/ExamenServlet.java
 /home/tokijr/Documents/app-questionnaire/src/main/java/com/monapp/service/EmailService.java
 /home/tokijr/Documents/app-questionnaire/src/main/java/com/monapp/model/Etudiant.java

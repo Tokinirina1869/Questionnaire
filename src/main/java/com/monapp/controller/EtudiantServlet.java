@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @WebServlet("/etudiants")
 public class EtudiantServlet extends HttpServlet {
@@ -64,7 +66,9 @@ public class EtudiantServlet extends HttpServlet {
             }
             else {
                 List<Etudiant> etudiants = service.lister();
-                req.setAttribute("etudiants", etudiants);
+                Map<String, List<Etudiant>> groupes = etudiants.stream()
+                        .collect(Collectors.groupingBy(Etudiant::getNiveau));
+                req.setAttribute("groupes", groupes);
                 req.getRequestDispatcher("/etudiants/list.jsp")
                    .forward(req, response);
             }

@@ -1,6 +1,28 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.monapp.model.Qcm" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
+<c:if test="${not empty param.succes}" >
+    <div id="toast-success"
+        class="fixed bottom-5 right-5 z-[100] flex items-center w-full max-w-xs p-4
+            text-gray-700 bg-white rounded-lg shadow-2xl border-l-4 border-green-800
+            dark:bg-gray-800 dark:text-gray-300">
+        <div class="ml-3 text-sm font-normal">
+            <c:choose>
+                <c:when test="${param.succes == 'add'}">Ajout de nouvelle question avec succès !</c:when>
+                <c:when test="${param.succes == 'edit'}">Question modifiée aves succès !</c:when>
+                <c:when test="${param.succes == 'delete'}">Question supprimée avec réussite !</c:when>
+            </c:choose>
+        </div>
+        <button type="button" onclick="this.parentElement.remove()" class="ml-auto text-gray-400">
+            <svg class="w-3 h-3" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/></svg>
+        </button>
+    </div>
+    <script>
+        setTimeout(()  => { document.getElementById('toast-success')?.remove(); }, 5000);
+    </script>
+</c:if>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -25,10 +47,10 @@
             </a>
         </div>
 
-        <div class="border shadow-xl overflow-hidden">
+        <div class="bg-white dark:bg-gray-900 rounded-xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-800">
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
-                    <thead class="text-xs text-center">
+                    <thead class="bg-blue-800 dark:bg-blue-900 text-white text-center">
                         <th class="px-6 py-4">Questions</th>
                         <th class="px-6 py-4">Réponses</th>
                         <th class="px-6 py-4">Bonne Réponse</th>
