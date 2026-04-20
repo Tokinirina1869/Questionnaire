@@ -20,7 +20,7 @@ lint-test-job:
   stage: test
   script:
     - echo "Linting coe... This will take about 10 seconds."
-    - sleep 10
+    - sleep 15
     - echo "No lint issues found."
 
 deloy-job:
