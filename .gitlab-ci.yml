@@ -6,6 +6,6 @@ job_test:
   tags:
     - pc-toki
   script:
-    - echo "Début du build sur mon PC Linux Mint..."
+    - echo "Début du build sur mon PC..."
     - mvn --version
     - mvn clean compile
