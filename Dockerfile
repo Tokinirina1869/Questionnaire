@@ -18,7 +18,7 @@ ENV DB_HOST=db \
 USER root
 # Installation du driver
 RUN mkdir -p /opt/jboss/wildfly/modules/system/layers/base/org/postgresql/main
-COPY postgresql.jar /opt/jboss/wildfly/modules/system/layers/base/org/postgresql/main/
+COPY postgresql-42.7.3.jar /opt/jboss/wildfly/modules/system/layers/base/org/postgresql/main/
 COPY module.xml /opt/jboss/wildfly/modules/system/layers/base/org/postgresql/main/
 RUN chown -R jboss:jboss /opt/jboss/wildfly/modules/system/layers/base/org/postgresql/
 
@@ -42,9 +42,12 @@ RUN /opt/jboss/wildfly/bin/standalone.sh -c standalone.xml -b 0.0.0.0 & \
         --use-java-context=true" && \
     /opt/jboss/wildfly/bin/jboss-cli.sh --connect --command=":shutdown"
 
+RUN rm -rf /opt/jboss/wildfly/standalone/configuration/standalone_xml_history/*
+
 # 2. On copie l'application SEULEMENT ICI
 # Comme WildFly est éteint à cette étape du RUN, il ne tentera pas de la déployer de suite
 COPY --from=build /app/target/*.war /opt/jboss/wildfly/standalone/deployments/ROOT.war
+
 
 EXPOSE 8080
 
