@@ -1,0 +1,3 @@
+<logger category="org.jboss">
+    <level name="WARN"/>
+</logger>
