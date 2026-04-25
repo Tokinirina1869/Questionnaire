@@ -51,7 +51,7 @@
         </a>
         <a href="${pageContext.request.contextPath}/etudiants"
            class="${base} ${uri.contains('/etudiants') ? active : inactive}">
-            Étudiants
+            Etudiants
         </a>
         <a href="${pageContext.request.contextPath}/examen?action=passer" <%-- CORRIGÉ : lien complet --%>
            class="${base} ${uri.contains('/examen') && currentAction == 'passer' ? active : inactive}">
