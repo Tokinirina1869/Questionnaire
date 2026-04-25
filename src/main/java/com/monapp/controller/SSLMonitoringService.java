@@ -15,7 +15,7 @@ public class SSLMonitoringService {
     @Inject
     private EmailService ServiceMail;
 
-    @Schedule(hour = "8", minute = "0", second = "0", persistent = false)
+    @Schedule(hour = "18:35", minute = "0", second = "0", persistent = false)
     public void checkSSLValidity(){
         try {
             URL url = new URL("https://questionnaire-iqzw.onrender.com/");
