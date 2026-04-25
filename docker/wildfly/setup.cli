@@ -1,0 +1,15 @@
+/subsystem=datasources/jdbc-driver=postgresql:add( \
+    driver-name=postgresql, \
+    driver-module-name=org.postgresql, \
+    driver-class-name=org.postgresql.Driver, \
+    driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
+
+/opt/jboss/wildfly/bin/jboss-cli.sh --connect --command="data-source add \
+    --name=PostgreSQLDS \
+    --jndi-name=java:jboss/datasources/PostgreSQLDS \
+    --driver-name=postgresql \
+    --connection-url=jdbc:postgresql://\${env.DB_HOST}:\${env.DB_PORT}/\${env.DB_NAME} \
+    --user-name=\${env.DB_USER} \
+    --password=\${env.DB_PASS} \
+    --enabled=true \
+    --use-java-context=true"

@@ -1,3 +1,108 @@
-<logger category="org.jboss">
-    <level name="WARN"/>
-</logger>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<server xmlns="urn:jboss:domain:20.0">
+
+    <extensions>
+        <extension module="org.jboss.as.clustering.infinispan"/>
+        <extension module="org.jboss.as.connector"/>
+        <extension module="org.jboss.as.deployment-scanner"/>
+        <extension module="org.jboss.as.ee"/>
+        <extension module="org.jboss.as.ejb3"/>
+        <extension module="org.jboss.as.jpa"/>
+        <extension module="org.jboss.as.jaxrs"/>
+        <extension module="org.jboss.as.jmx"/>
+        <extension module="org.jboss.as.logging"/>
+        <extension module="org.jboss.as.naming"/>
+        <extension module="org.jboss.as.transactions"/>
+        <extension module="org.jboss.as.weld"/>
+        <extension module="org.wildfly.extension.undertow"/>
+        <extension module="org.wildfly.extension.elytron"/>
+    </extensions>
+
+    <!-- MANAGEMENT -->
+    <management>
+        <management-interfaces>
+            <http-interface>
+                <http-upgrade enabled="true"/>
+                <socket-binding http="management-http"/>
+            </http-interface>
+        </management-interfaces>
+    </management>
+
+    <!-- ✅ PROFILE DOIT ÊTRE ICI -->
+    <profile>
+
+        <!-- UNDERTOW -->
+        <subsystem xmlns="urn:jboss:domain:undertow:14.0">
+            <server name="default-server">
+                <http-listener name="default" socket-binding="http"/>
+                <host name="default-host" alias="localhost">
+                    <location name="/" handler="welcome-content"/>
+                </host>
+            </server>
+
+            <servlet-container name="default">
+                <jsp-config/>
+            </servlet-container>
+
+            <handlers>
+                <file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>
+            </handlers>
+        </subsystem>
+
+        <!-- JPA -->
+        <subsystem xmlns="urn:jboss:domain:jpa:1.1">
+            <jpa default-extended-persistence-inheritance="DEEP"/>
+        </subsystem>
+
+        <!-- DATASOURCE -->
+        <subsystem xmlns="urn:jboss:domain:datasources:7.0">
+            <datasources>
+
+                <datasource jndi-name="java:jboss/datasources/PostgreSQLDS"
+                            pool-name="PostgreSQLDS"
+                            enabled="true">
+
+                    <connection-url>
+                        jdbc:postgresql://postgres-db:5432/questionnaire
+                    </connection-url>
+
+                    <driver>postgresql</driver>
+
+                    <security>
+                        <user-name>toki</user-name>
+                        <password>toki</password>
+                    </security>
+                </datasource>
+
+            </datasources>
+        </subsystem>
+
+        <!-- EJB -->
+        <subsystem xmlns="urn:jboss:domain:ejb3:10.0">
+            <session-bean>
+                <stateless>
+                    <bean-instance-pool-ref pool-name="slsb-strict-max-pool"/>
+                </stateless>
+            </session-bean>
+        </subsystem>
+
+    </profile>
+
+    <!-- INTERFACES -->
+    <interfaces>
+        <interface name="public">
+            <any-address/>
+        </interface>
+        <interface name="management">
+            <any-address/>
+        </interface>
+    </interfaces>
+
+    <!-- SOCKETS -->
+    <socket-binding-group name="standard-sockets" default-interface="public">
+        <socket-binding name="http" port="${jboss.http.port:8080}"/>
+        <socket-binding name="management-http" port="9990"/>
+    </socket-binding-group>
+
+</server>
