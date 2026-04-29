@@ -10,25 +10,21 @@ import com.monapp.service.EmailService;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet("/examen")
 public class ExamenServlet extends HttpServlet {
     @Inject
     private QcmService qService;
-
     @Inject
     private EtudiantService etuService;
-
     @Inject
     private ExamenService examService;
-
     @Inject
     private EmailService emailService;
 
@@ -37,64 +33,46 @@ public class ExamenServlet extends HttpServlet {
         throws ServletException, IOException
     {
         String action = request.getParameter("action");
-
-           
-        List<Qcm> questions = qService.dixQuestionsAleatoires();            
-        List<Etudiant> etudiants = etuService.lister();
-
-        // Debug console
-        System.out.println("Service QCM injecté ? " + (qService != null));
-        System.out.println("Nombre de questions récupérées: " + (questions != null ? questions.size() : "NULL"));
         
+        // 1. Récupérer uniquement les étudiants approuvés
+        List<Etudiant> etudiantsApprouves = etuService.lister().stream()
+                                                    .filter(Etudiant::isApprouve)
+                                                    .collect(Collectors.toList());
+
+        // 2. Récupérer les questions (10 aléatoires)
+        List<Qcm> questions = qService.dixQuestionsAleatoires();
         if (questions == null) questions = new ArrayList<>();
-        if (etudiants == null) etudiants = new ArrayList<>();
 
+        // 3. Préparation des attributs pour la JSP
+        request.setAttribute("etudiants", etudiantsApprouves);
         request.setAttribute("questions", questions);
-        request.setAttribute("etudiants", etudiants);
 
-        if ("passer".equals(action)) {
-            request.getRequestDispatcher("/examen/passer.jsp")
-                    .forward(request, reponse);
-        }
-        else if ("envoyer".equals(action)) {
-            Integer numExam = Integer.parseInt(request.getParameter("numExam"));
-            Examen examen   = examService.trouverParId(numExam);
-
-            String email    = examen.getEtudiant().getEmail();
-            String nom      = examen.getEtudiant().getNom() + " "
-                            + examen.getEtudiant().getPrenoms();
-            int note        = examen.getNote();
-            String anneeUniv = examen.getAnneeUniv();
-
-            emailService.envoyerNote(email, nom, note, anneeUniv);
-
-            reponse.sendRedirect(request.getContextPath()
-                    + "/examen?action=resultats&succes=email");
-            return;
-        }
-        else if ("resultats".equals(action)) {
+        if ("resultats".equals(action)) {
             request.setAttribute("examens", examService.listerExamen());
             request.getRequestDispatcher("/examen/resultat.jsp").forward(request, reponse);
         }
-        else if ("delete".equals(action)) {
+        else if ("envoyer".equals(action)) {
+            // Logique d'envoi d'email
             try {
-                Integer id = Integer.parseInt(request.getParameter("id"));
-                System.out.println("Tentative de suppression de l'ID : " + id); // Debug
-                
-                examService.supprimerExam(id);
-                
-                reponse.sendRedirect(request.getContextPath() + "/examen?action=resultats&succes=delete");
-                return;
-            } 
-            catch (Exception e) {
-                // C'est ICI que la vraie erreur va s'afficher dans votre console
-                e.printStackTrace(); 
+                Integer numExam = Integer.parseInt(request.getParameter("numExam"));
+                Examen examen = examService.trouverParId(numExam);
+                emailService.envoyerNote(examen.getEtudiant().getEmail(), 
+                                       examen.getEtudiant().getNom(), 
+                                       examen.getNote(), 
+                                       examen.getAnneeUniv());
+                reponse.sendRedirect(request.getContextPath() + "/examen?action=resultats&succes=email");
+            } catch (Exception e) {
+                reponse.sendRedirect(request.getContextPath() + "/examen?action=resultats&erreur=email");
             }
-            return;
+        }
+        else if ("delete".equals(action)) {
+            Integer id = Integer.parseInt(request.getParameter("id"));
+            examService.supprimerExam(id);
+            reponse.sendRedirect(request.getContextPath() + "/examen?action=resultats&succes=delete");
         }
         else {
-            request.getRequestDispatcher("/examen/passer.jsp")
-                    .forward(request, reponse);
+            // Action "passer" ou par défaut
+            request.getRequestDispatcher("/examen/passer.jsp").forward(request, reponse);
         }
     }
 
@@ -102,38 +80,18 @@ public class ExamenServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException
     {
-        String numEtudiant  = request.getParameter("num_etudiant");
-        String anneeUniv    = request.getParameter("annee_univ");
-        Etudiant etudiant   = etuService.rechercherParNum(numEtudiant); 
+        String[] idsEtudiants = request.getParameterValues("ids_etudiants");
+        String anneeUniv = request.getParameter("annee_univ");
         
-        String[] numQuests  = request.getParameterValues("num_quest");
-        int note = 0;
-
-        for (String numQuest : numQuests) {
-            Integer idQuestion  = Integer.parseInt(numQuest);
-            Qcm question        = qService.trouverParId(idQuestion);
-            String reponseDonne = request.getParameter("reponse_" + numQuest);
-
-            if (reponseDonne != null) {
-                int repInt = Integer.parseInt(reponseDonne);
-
-                // Comparer avec la bonneReponse
-                if (repInt == question.getBonneReponse()) {
-                    note++;
-                }
+        // Dans ExamenServlet.java -> doPost
+        if (idsEtudiants != null) {
+            for (String id : idsEtudiants) {
+                Etudiant etu = etuService.rechercherParNum(id);
+                // On met 0 pour éviter l'erreur SQLState: 23514
+                Examen assignation = new Examen(etu, anneeUniv, 0); 
+                examService.ajouterExamen(assignation);
             }
         }
-
-        // Save in BD
-
-        Examen exam = new Examen(etudiant, anneeUniv, note);
-        examService.ajouterExamen(exam);
-
-        request.setAttribute("note", note);
-        request.setAttribute("etudiant", etudiant);
-        request.setAttribute("anneeUniv", anneeUniv);
-        request.getRequestDispatcher("/examen/res.jsp")
-                .forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/examen?action=resultats&succes=publie");
     }
-    
 }

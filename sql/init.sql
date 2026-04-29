@@ -1,11 +1,23 @@
+
 CREATE TABLE etudiant (
     num_etudiant    VARCHAR(20) PRIMARY KEY,
     nom             VARCHAR(200) NOT NULL,
     prenoms         VARCHAR(200),
     niveau          VARCHAR(5) CHECK (niveau IN ('L1', 'L2', 'L3', 'M1', 'M2')),
-    adr_email       VARCHAR(200) UNIQUE NOT NULL
+    adr_email       VARCHAR(200) UNIQUE NOT NULL,
+    mdp_etudiant    VARCHAR(255),
+    approuveetu     BOOLEAN DEFAULT FALSE,
+    date_inscritEtu TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE administrateur(
+    id_admin     SERIAL PRIMARY KEY,
+    nom_admin    VARCHAR(200),
+    email_admin  VARCHAR(200) UNIQUE NOT NULL,
+    mdp_admin    VARCHAR(255),
+    approuve     BOOLEAN DEFAULT FALSE,
+    date_inscrit TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 CREATE TABLE qcm (
     num_quest           SERIAL PRIMARY KEY,

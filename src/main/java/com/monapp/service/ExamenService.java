@@ -46,4 +46,12 @@ public class ExamenService {
     {
         return repoExam.getMoyenneGenerale();
     }
+
+    public void modifierExamen(Examen exam){
+        repoExam.update(exam);
+    }
+
+    public Examen trouverExamenActif(String num){
+        return repoExam.findActiveByEtudiant(num);
+    }
 }

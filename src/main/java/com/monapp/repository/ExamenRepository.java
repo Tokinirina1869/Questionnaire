@@ -57,4 +57,21 @@ public class ExamenRepository {
         return em.createQuery("SELECT AVG(e.note) FROM Examen e", Double.class)
                 .getSingleResult();
     }
+
+    public Examen findActiveByEtudiant(String numEtudiant) {
+        try {
+            return em.createQuery(
+                "SELECT e FROM Examen e WHERE e.etudiant.numEtudiant = :num AND e.note = 0", 
+                Examen.class)
+                .setParameter("num", numEtudiant)
+                .getSingleResult();
+        } catch (Exception e) {
+            return null; // Aucun examen en attente trouvé
+        }
+    }
+
+    @Transactional
+    public void update(Examen examen) {
+        em.merge(examen); // merge met à jour la ligne existante au lieu d'en créer une nouvelle
+    }
 }

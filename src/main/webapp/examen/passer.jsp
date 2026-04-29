@@ -27,113 +27,46 @@
 
     <main class="max-w-3xl mx-auto p-6">
         <h1 class="text-2xl font-bold border-l-4 border-blue-500 pl-4 mb-8">
-            Passage de l'examen
+            Assignation d'un nouvel examen
         </h1>
 
-        <form method="POST" action="<%= request.getContextPath() %>/examen"
-              class="space-y-6">
-
-            <!-- Infos étudiant -->
-            <div class="border rounded-xl p-5 space-y-4">
-                <h2 class="font-semibold text-blue-400">Informations</h2>
-
-                <div>
-                    <label class="text-xs font-bold uppercase">Étudiant</label>
-                    <select name="num_etudiant" required
-                        class="w-full px-4 py-2.5 rounded-lg text-sm 
-                        border border-gray-300 dark:border-gray-700
-                        bg-white dark:bg-gray-800 
-                        text-gray-900 dark:text-gray-100
-                        focus:ring-2 focus:ring-blue-500 outline-none">
-                        <option value="">-- Choisir un étudiant --</option>
-                        <% for (Etudiant e : etudiants) { %>
-                            <option value="<%= e.getNumEtudiant() %>">
-                                <%= e.getNumEtudiant() %> — <%= e.getNom() %> <%= e.getPrenoms() %>
-                            </option>
-                        <% } %>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="text-xs font-bold uppercase">
-                        Année universitaire
+        <form method="POST" action="<%= request.getContextPath() %>/examen" class="space-y-6">
+            <div class="border rounded-xl p-5 space-y-4 bg-white shadow-sm">
+                <h2 class="font-semibold text-blue-600 flex items-center">
+                    <i class="fas fa-bullhorn mr-2"></i>Étudiants concernés
+                </h2>
+                
+                <div class="space-y-2 max-h-48 overflow-y-auto border border-gray-200 p-3 rounded-lg bg-gray-50">
+                    <label class="flex items-center gap-2 font-bold text-sm mb-2 border-b pb-2 text-gray-700">
+                        <input type="checkbox" id="select-all" onclick="toggleAll(this)"> 
+                        Sélectionner tout le groupe (<%= etudiants.size() %>)
                     </label>
-                    <input type="text" name="annee_univ" required
-                        placeholder="Ex: 2024-2025"
-                        class="w-full px-4 py-2.5 rounded-lg text-sm
-                            border border-gray-300 dark:border-gray-700
-                            bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
-                            focus:ring-2 focus:ring-blue-500 outline-none"/>
+                    <% for (Etudiant e : etudiants) { %>
+                        <label class="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-md cursor-pointer">
+                            <input type="checkbox" name="ids_etudiants" value="<%= e.getNumEtudiant() %>" class="etu-checkbox">
+                            <span class="text-sm"><%= e.getNom() %> <%= e.getPrenoms() %></span>
+                        </label>
+                    <% } %>
                 </div>
 
-                <button type="button" onclick="afficherQuestions()" class="py-2 w-full text-white font-bold bg-blue-800 transition-all rounded-lg">
-                    Passer à l'examen
+                <div>
+                    <label class="text-xs font-bold uppercase text-gray-500">Session / Année</label>
+                    <input type="text" name="annee_univ" required placeholder="Ex: 2025-2026"
+                        class="w-full px-4 py-2.5 rounded-lg text-sm border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"/>
+                </div>
+
+                <button type="submit" 
+                        class="py-3 w-full text-white font-bold bg-indigo-600 hover:bg-indigo-700 transition-all rounded-lg shadow-md">
+                    <i class="fas fa-paper-plane mr-2"></i>Publier l'examen pour ces étudiants
                 </button>
             </div>
-
-
-            <!-- Questions -->
-
-            <div id="section-questions" class="hidden space-y-6">
-                <h2 class="text-xl font-semibold text-blue-400">Répondez aux questions</h2>
-                <% int num = 1; for (Qcm q : questions) { %>
-                    <div class="border rounded-xl p-5">
-
-                        <input type="hidden" name="num_quest" value="<%= q.getNumQuest() %>"/>
-
-                        <p class="font-medium mb-4">
-                            <span class="text-blue-400 font-mono mr-2">Q<%= num++ %>.</span>
-                            <%= q.getQuestion() %>
-                        </p>
-
-                        <div class="space-y-2">
-                            <label class="flex items-center gap-3 p-3 rounded-lg border dark:border-gray-800 hover:bg-blue-900/20 cursor-pointer ">
-                                <input type="radio" name="reponse_<%= q.getNumQuest() %>" value="1" required/>
-                                <span class="text-sm"><%= q.getReponse1() %></span>
-                            </label>
-                            <label class="flex items-center gap-3 p-3 rounded-lg border dark:border-gray-800 hover:bg-blue-900/20 cursor-pointer  ">
-                                <input type="radio" name="reponse_<%= q.getNumQuest() %>" value="2"/>
-                                <span class="text-sm"><%= q.getReponse2() %></span>
-                            </label>
-                            <label class="flex items-center gap-3 p-3 rounded-lg border dark:border-gray-800 hover:bg-blue-900/20 cursor-pointer  ">
-                                <input type="radio" name="reponse_<%= q.getNumQuest() %>" value="3"/>
-                                <span class="text-sm"><%= q.getReponse3() %></span>
-                            </label>
-                            <label class="flex items-center gap-3 p-3 rounded-lg border dark:border-gray-800 hover:bg-blue-900/20 cursor-pointer  ">
-                                <input type="radio" name="reponse_<%= q.getNumQuest() %>" value="4"/>
-                                <span class="text-sm"><%= q.getReponse4() %></span>
-                            </label>
-                        </div>
-                    </div>
-                <% } %>
-
-
-                <!-- Bouton soumettre -->
-                <button type="submit"
-                        class="w-full py-3 bg-blue-600 hover:bg-blue-500 rounded-xl
-                            font-bold text-sm transition-all">
-                    Soumettre mes réponses
-                </button>
-            </div>
-
         </form>
     </main>
     
     <script>
-        function afficherQuestions(btn){
-            const etudiant  = document.querySelector('select[name="num_etudiant"]').value;
-            const annee     = document.querySelector('input[name="annee_univ"]').value;
-
-            if(etudiant === "" || annee === "") {
-                alert("Veuillez remplir les informations avant de commencer !")
-                return;
-            }
-            document.getElementById('section-questions').classList.remove('hidden');
-
-            document.getElementById('section-questions').scrollIntoView({ behavior:"smooth" });
-
-            event.target.classList.add('opacity-50', 'cursor-not-allowed');
-            event.target.innerText = "Examen en cours...";
+        function toggleAll(source) {
+            const checkboxes = document.querySelectorAll('.etu-checkbox');
+            checkboxes.forEach(cb => cb.checked = source.checked);
         }
     </script>
 </body>

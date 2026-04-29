@@ -12,6 +12,8 @@ services:
       - DB_NAME=questionnaire
       - DB_USER=toki
       - DB_PASS=toki
+    volumes:
+      - .:/app
     # On retire le "command" complexe car tout est déjà prêt dans l'image
     depends_on:
       - db

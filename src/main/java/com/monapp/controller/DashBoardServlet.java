@@ -2,9 +2,7 @@ package com.monapp.controller;
 
 import jakarta.inject.Inject;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 import jakarta.servlet.ServletException;
 import com.monapp.service.QcmService;
 import com.monapp.service.ExamenService;

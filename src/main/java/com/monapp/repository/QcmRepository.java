@@ -6,6 +6,8 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -26,8 +28,17 @@ public class QcmRepository {
     }
 
     public List<Qcm> findRandom10() {
-        return em.createNativeQuery("SELECT * FROM qcm ORDER BY RANDOM() LIMIT 10", Qcm.class)
-                .getResultList(); 
+        try {
+            List<Qcm> results = em.createQuery("SELECT q FROM Qcm q ORDER BY FUNCTION('random')", Qcm.class)
+                    .setMaxResults(10)
+                    .getResultList();
+            System.out.println("REPO DEBUG: Requête exécutée. Taille = " + results.size());
+            return results;
+        } catch (Exception e) {
+            System.err.println("REPO ERROR: Erreur lors de la récupération des QCM");
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
     public Qcm findById(Integer id)

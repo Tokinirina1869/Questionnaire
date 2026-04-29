@@ -1,5 +1,6 @@
 package com.monapp.repository;
 
+import com.monapp.model.Admin;
 import com.monapp.model.Etudiant;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
@@ -14,9 +15,13 @@ public class EtudiantRepository {
 
     //CREATE = Insert into etudiant ...
     @Transactional
-    public void save(Etudiant e) 
-    {
-        em.persist(e); // persist = inserer en BD
+    public void save(Etudiant etu) throws Exception {
+        // 1. On vérifie le doublon
+        if (findByEmail(etu.getEmail()) != null) {
+            throw new Exception("Cette adresse email est déjà utilisée");
+        }
+        
+        em.persist(etu); 
     }
     
     // READ (Unique)
@@ -29,6 +34,16 @@ public class EtudiantRepository {
     public List<Etudiant> findAll() 
     {
         return em.createQuery("SELECT e FROM Etudiant e", Etudiant.class).getResultList();
+    }
+
+    public Etudiant findByEmail(String email) {
+        try {
+            return em.createQuery("SELECT e FROM Etudiant e WHERE e.email = :email", Etudiant.class)
+                     .setParameter("email", email)
+                     .getSingleResult();
+        } catch (Exception e) {
+            return null; // Si l'email n'existe pas
+        }
     }
 
     // Update
@@ -83,5 +98,22 @@ public class EtudiantRepository {
         Long count = em.createQuery("SELECT COUNT(e) FROM Etudiant e", Long.class).getSingleResult();
         
         return count;
+    }
+
+    @Transactional
+    public void validerAcces(String numEtu){
+        Etudiant a = em.find(Etudiant.class, numEtu);
+        if (a != null) {
+            a.setApprouve(true);
+        }
+    }
+
+    @Transactional
+    public void rejeterAcces(String numEtu){
+        Etudiant a = em.find(Etudiant.class, numEtu);
+
+        if (a != null) {
+            em.remove(a);
+        }
     }
 }

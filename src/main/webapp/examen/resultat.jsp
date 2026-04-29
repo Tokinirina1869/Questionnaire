@@ -70,23 +70,46 @@
                                 <td class="fw-bold text-center text-lg text-blue-700 dark:text-blue-300">${ex.note}</td>
                                 <td class="text-center">
                                     <c:choose>
+                                        <c:when test="${ex.note == 0}">
+                                            <span class="bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase">
+                                                <i class="fas fa-clock mr-1"></i>En cours
+                                            </span>
+                                        </c:when>
                                         <c:when test="${ex.note >= 5}">
-                                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full dark:bg-green-900 dark:text-green-300">Admis</span>
+                                            <span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase">
+                                                Admis
+                                            </span>
                                         </c:when>
                                         <c:otherwise>
-                                            <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full dark:bg-red-900 dark:text-red-300">Ajourné</span>
+                                            <span class="bg-red-100 text-red-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase">
+                                                Ajourné
+                                            </span>
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
                                 <td class="text-center flex justify-center gap-2 py-3">
-                                    <a href="${pageContext.request.contextPath}/examen?action=envoyer&numExam=${ex.numExam}"
-                                    onclick="return confirm('Envoyer la note à ${ex.etudiant.nom} ?')"
-                                    class="bg-green-600 hover:bg-green-700 text-white text-xs px-3 py-1.5 rounded-lg transition-all">
-                                        Envoyer
-                                    </a>
+                                    <c:choose>
+                                        <%-- Cas : La note est à 0 (Examen non fait ou en cours) --%>
+                                        <c:when test="${ex.note == 0}">
+                                            <button onclick="alert('Action impossible : Examen en cours!')" 
+                                                    class="bg-gray-400 cursor-not-allowed text-white text-xs px-3 py-1.5 rounded-lg">
+                                                Envoyer
+                                            </button>
+                                        </c:when>
+
+                                        <%-- Cas : L'examen est terminé (Note > 0) --%>
+                                        <c:otherwise>
+                                            <a href="${pageContext.request.contextPath}/examen?action=envoyer&numExam=${ex.numExam}"
+                                            onclick="return confirm('Confirmer l\'envoi de la note (${ex.note}/10) à ${ex.etudiant.nom} ?')"
+                                            class="bg-green-600 hover:bg-green-700 text-white text-xs px-3 py-1.5 rounded-lg transition-all shadow-sm">
+                                                Envoyer
+                                            </a>
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                    <%-- Bouton Supprimer (toujours actif) --%>
                                     <button onclick="deleteExam('${ex.numExam}')" 
-                                            class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1.5 rounded-lg transition-all" 
-                                            title="Supprimer">
+                                            class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1.5 rounded-lg transition-all">
                                         Supprimer
                                     </button>
                                 </td>

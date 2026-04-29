@@ -41,7 +41,8 @@ public class EmailService {
                 note + " / 10</h1>" +
                 "<p>" + (note >= 5 ? "Félicitations, vous êtes <strong>Admis</strong> !"
                                    : "Vous avez besoin des <strong>efforts</strong>.") +
-                "</p>";
+                "</p>" +
+                "<footer style='font-size: 0.8em; color: #777;'>Généré automatiquement par https://questionnaire-iqzw.onrender.com</footer>";
 
                 message.setContent(contenu, "text/html; charset=UTF-8");
                 Transport.send(message);
@@ -80,7 +81,7 @@ public class EmailService {
                 "<h2 style='color: #d9534f;'>🚨 Alerte Sécurité Système</h2>" +
                 "<p>" + messageTexte + "</p>" +
                 "<hr/>" +
-                "<footer style='font-size: 0.8em; color: #777;'>Généré automatiquement par qcm.app</footer>" +
+                "<footer style='font-size: 0.8em; color: #777;'>Généré automatiquement par https://questionnaire-iqzw.onrender.com</footer>" +
                 "</div>";
 
             message.setContent(contenu, "text/html; charset=UTF-8");

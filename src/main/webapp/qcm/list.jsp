@@ -35,7 +35,7 @@
 <body>
     <jsp:include page="/navbar.jsp" />
     
-    <main class="max-w-6xl mx-auto p-6">
+    <main class="mx-auto p-6">
         <div class="flex justify-between items-center mb-8">
             <h1 class="text-2xl font-bold border-l-4 border-blue-500 pl-4">
                 Bibliothèque de Questions

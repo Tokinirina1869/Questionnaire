@@ -1,6 +1,8 @@
 package com.monapp.controller;
 
 import com.monapp.service.EmailService;
+
+import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Schedule;
 import jakarta.ejb.Singleton;
 import jakarta.inject.Inject;
@@ -15,7 +17,7 @@ public class SSLMonitoringService {
     @Inject
     private EmailService ServiceMail;
 
-    @Schedule(hour = "17", minute = "45", second = "0", persistent = false)
+    @Schedule(hour = "*", minute = "20", second = "0", persistent = false)
     public void checkSSLValidity(){
         try {
             URL url = new URL("https://questionnaire-iqzw.onrender.com/");
@@ -26,13 +28,14 @@ public class SSLMonitoringService {
             long diff = cert.getNotAfter().getTime() - new Date().getTime();
             long daysLeft = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 
-            if (daysLeft < 15) {
+            if (daysLeft < 15) {q
                 ServiceMail.send(
                     "roberttokinirina@gmail.com", 
                     "CRITIQUE : Expiration SSL imminente", 
                     "Le certificat pour l'application expire dans " + daysLeft + " jours. Vérifiez l'automatisation Render."
                 );
-            } else {
+            } 
+            else {
                 
                 ServiceMail.send(
                     "roberttokinirina@gmail.com", 
@@ -50,6 +53,17 @@ public class SSLMonitoringService {
                 "⚠️ ERREUR : Échec du monitoring SSL",
                 "Impossible de vérifier le certificat SSL : " + e.getMessage()
             );
+            e.printStackTrace();
+        }
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("Démarrage manuel du check SSL pour test...");
+        try {
+            checkSSLValidity();
+            System.out.println("Test initial terminé.");
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
