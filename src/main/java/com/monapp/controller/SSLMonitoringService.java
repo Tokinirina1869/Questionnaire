@@ -28,7 +28,7 @@ public class SSLMonitoringService {
             long diff = cert.getNotAfter().getTime() - new Date().getTime();
             long daysLeft = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 
-            if (daysLeft < 15) {q
+            if (daysLeft < 15) {
                 ServiceMail.send(
                     "roberttokinirina@gmail.com", 
                     "CRITIQUE : Expiration SSL imminente", 
