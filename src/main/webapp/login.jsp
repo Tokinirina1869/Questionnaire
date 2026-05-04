@@ -77,7 +77,7 @@
             </button>
             <button type="button" onclick="setRole('admin')" id="btn-admin" 
                     class="flex-1 py-3 rounded-xl font-bold transition-all duration-300 text-gray-500 hover:text-indigo-600">
-                <i class="bi bi-person-workspace mr-2"></i> Admin
+                <i class="bi bi-person-workspace mr-2"></i> Enseignant
             </button>
         </div>
 

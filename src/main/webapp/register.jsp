@@ -192,7 +192,7 @@
                 containerPrenoms.classList.add('hidden');
                 inputPrenoms.removeAttribute('required');
                 inputPrenoms.value = ""; // Clean value
-                submitText.textContent = "Créer mon compte Admin";
+                submitText.textContent = "Créer mon compte Enseignant";
                 form.action = "${pageContext.request.contextPath}/register";
             } else {
                 containerPrenoms.classList.remove('hidden');

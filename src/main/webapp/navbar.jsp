@@ -106,6 +106,10 @@
                        class="nav-link ${uri.contains('etudiants') ? 'nav-link-active' : ''}">
                         <i class="fas fa-users mr-1.5 text-xs opacity-70"></i>Liste Étudiants
                     </a>
+                    <a href="${pageContext.request.contextPath}/etudiant/passer-examen"
+                       class="nav-link ${uri.contains('classement') ? 'nav-link-active' : ''}">
+                        <i class="fas fa-star mr-1.5 text-xs opacity-70"></i>Questions
+                    </a>
                     <a href="${pageContext.request.contextPath}/etudiant/classement"
                        class="nav-link ${uri.contains('classement') ? 'nav-link-active' : ''}">
                         <i class="fas fa-star mr-1.5 text-xs opacity-70"></i>Mes Notes

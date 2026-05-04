@@ -71,7 +71,6 @@ public class ExamenServlet extends HttpServlet {
             reponse.sendRedirect(request.getContextPath() + "/examen?action=resultats&succes=delete");
         }
         else {
-            // Action "passer" ou par défaut
             request.getRequestDispatcher("/examen/passer.jsp").forward(request, reponse);
         }
     }
@@ -87,11 +86,10 @@ public class ExamenServlet extends HttpServlet {
         if (idsEtudiants != null) {
             for (String id : idsEtudiants) {
                 Etudiant etu = etuService.rechercherParNum(id);
-                // On met 0 pour éviter l'erreur SQLState: 23514
                 Examen assignation = new Examen(etu, anneeUniv, 0); 
                 examService.ajouterExamen(assignation);
             }
         }
-        response.sendRedirect(request.getContextPath() + "/examen?action=resultats&succes=publie");
+        response.sendRedirect(request.getContextPath() + "/admin-gestion");
     }
 }

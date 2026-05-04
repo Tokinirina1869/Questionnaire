@@ -45,13 +45,11 @@ public class EtudiantExamen extends HttpServlet {
                 request.setAttribute("annee_univ", examenEnAttente.getAnneeUniv());
                 request.getRequestDispatcher("/etudiants/question.jsp").forward(request, response);
             } else {
-               
-                System.out.println("LOG DEBUG: Liste de questions vide pour l'étudiant " + etu.getNumEtudiant());
-                response.sendRedirect(request.getContextPath() + "nonacces");
+                response.sendRedirect(request.getContextPath() + "etudiants");
                 return; 
             }
         } else {
-            response.sendRedirect("/nonacces");
+            response.sendRedirect("/etudiants");
         }
     }
 
@@ -76,12 +74,8 @@ public class EtudiantExamen extends HttpServlet {
 
         long startTime = (Long) request.getSession().getAttribute("startTime");
         long currentTime = System.currentTimeMillis();
-        long duration = (currentTime - startTime) / 1000 / 60; // en minutes
+        long duration = (currentTime - startTime) / 1000 / 60;
 
-        if (duration > 11) { // 1 minute de marge pour la latence réseau
-            // Forcer le traitement ou rejeter si trop tard
-            System.out.println("LOG WARN: Soumission tardive détectée.");
-        }
         request.getSession().removeAttribute("startTime"); // Nettoyage
         
         // UPDATE : On récupère l'examen créé par l'admin (qui avait 0)
