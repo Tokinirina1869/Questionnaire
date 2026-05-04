@@ -45,7 +45,8 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("role", "ADMIN");
                     response.sendRedirect(request.getContextPath() + "/admin-gestion");
                     return; 
-                } else {
+                } 
+                else {
                     request.setAttribute("erreur", "Votre compte est en attente d'approbation.");
                     request.getRequestDispatcher("/login.jsp").forward(request, response);
                     return;

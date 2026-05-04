@@ -4,97 +4,73 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<c:if test="${not empty param.succes}" >
-    <div id="toast-success"
-        class="fixed bottom-5 right-5 z-[100] flex items-center w-full max-w-xs p-4
-            text-gray-700 bg-white rounded-lg shadow-2xl border-l-4 border-green-800
-            dark:bg-gray-800 dark:text-gray-300">
-        <div class="ml-3 text-sm font-normal">
-            <c:choose>
-                <c:when test="${param.succes == 'add'}">Ajout de nouveau étudiant avec succès !</c:when>
-                <c:when test="${param.succes == 'edit'}">Information d'un étudiant modifié !</c:when>
-                <c:when test="${param.succes == 'delete'}">Etudiant supprimé dans la base de données !</c:when>
-            </c:choose>
-        </div>
-        <button type="button" onclick="this.parentElement.remove()" class="ml-auto text-gray-400">
-            <svg class="w-3 h-3" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/></svg>
-        </button>
-    </div>
-    <script>
-        setTimeout(()  => { document.getElementById('toast-success')?.remove(); }, 5000);
-    </script>
-</c:if>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Gestion de Questionnaire</title>
+    <title>Gestion des Étudiants</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <script>
+        tailwind.config = { darkMode: 'class' };
+    </script>
 </head>
-<body>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
 
     <jsp:include page="/navbar.jsp" />
 
-    <main class="max-w-6xl mx-auto p-6 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
-        <div class="flex justify-between items-center mb-8">
-            <h1 class="text-2xl font-bold border-l-4 border-blue-500 pl-4">
-                Liste des Étudiants inscrits
-            </h1>
-            <a href="<%= request.getContextPath() %>/etudiants?action=add"
-               class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm 
-                      font-medium transition-all flex items-center gap-2">
-                <span class="text-lg">+</span> Ajouter un étudiant
-            </a>
-        </div>
+    <main class="max-w-8xl mx-auto p-6 text-gray-900 dark:text-gray-100">
 
         <div class="border rounded-xl shadow-xl overflow-hidden">
 
-            <!-- Barre de recherche -->
-            <div class="p-4 border-b">
-                <form method="GET" action="<%= request.getContextPath() %>/etudiants" 
+            <%-- Barre de recherche --%>
+            <div class="p-4 border-b dark:border-gray-700">
+                <form method="GET" action="${pageContext.request.contextPath}/etudiants"
                       class="flex gap-3">
                     <input type="hidden" name="action" value="search"/>
-                    <input type="text" name="q" 
-                        value="<%= request.getAttribute("query") != null 
-                        ? request.getAttribute("query") : "" %>"
+                    <input type="text" name="q"
+                        value="${not empty requestScope.query ? requestScope.query : ''}"
                         placeholder="Rechercher..."
                         class="w-full px-4 py-2.5 rounded-lg text-sm
-                            border border-gray-300 dark:border-gray-700
-                            bg-white dark:bg-gray-800 text-gray-800 dark:bg-gray-100
-                            focus:ring-2 focus:ring-blue-500 outline-none"/>
+                               border border-gray-300 dark:border-gray-700
+                               bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100
+                               focus:ring-2 focus:ring-blue-500 outline-none"/>
                     <button type="submit"
-                            class="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-lg text-sm 
-                                   font-medium transition-colors flex items-center gap-2">
+                            class="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 
+                                   rounded-lg text-sm font-medium transition-colors 
+                                   flex items-center gap-2">
                         <i class="bi bi-search"></i> Rechercher
                     </button>
                 </form>
             </div>
 
-            <!-- Tableau -->
+            <%-- Tableau --%>
             <div class="space-y-4 p-4">
                 <c:choose>
                     <c:when test="${not empty groupes}">
-                        <%-- On boucle sur la Map : 'entry.key' est le Niveau, 'entry.value' est la Liste d'étudiants --%>
                         <c:forEach var="entry" items="${groupes}">
-                            
-                            <details class="group bg-white dark:bg-gray-800 dark:text-gray-100 border border-slate-800 rounded-xl overflow-hidden shadow-lg" open>
-                                <summary class="flex items-center justify-between p-5 cursor-pointer transition-all list-none">
+                            <details class="group bg-white dark:bg-gray-800 dark:text-gray-100 
+                                           border border-slate-200 dark:border-slate-700 
+                                           rounded-xl overflow-hidden shadow-md" open>
+                                <summary class="flex items-center justify-between p-5 
+                                                cursor-pointer transition-all list-none
+                                                hover:bg-gray-50 dark:hover:bg-gray-700/50">
                                     <span class="text-lg font-bold tracking-wide">${entry.key}</span>
-                                    
                                     <div class="flex items-center gap-4">
-                                        <%-- Affichage dynamique du nombre d'étudiants via fn:length --%>
-                                        <span class="bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-bold border">
+                                        <span class="bg-blue-600 text-white px-4 py-1 
+                                                     rounded-full text-xs font-bold">
                                             ${fn:length(entry.value)} étudiants
                                         </span>
-                                        <i class="bi bi-chevron-down text-slate-500 group-open:rotate-180 transition-transform"></i>
+                                        <i class="bi bi-chevron-down text-slate-500 
+                                                  group-open:rotate-180 transition-transform"></i>
                                     </div>
                                 </summary>
 
-                                <div class="px-5 pb-5 border-t border-slate-800/50 bg-white dark:bg-gray-900 dark:text-gray-100 text-gray-900">
+                                <div class="px-5 pb-5 border-t border-slate-200 dark:border-slate-700 
+                                            bg-white dark:bg-gray-900">
                                     <table class="w-full text-left mt-4">
-                                        <thead class="text-gray-600 dark:text-gray-400 text-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                                        <thead class="text-gray-500 dark:text-gray-400 text-sm">
                                             <tr>
                                                 <th class="pb-3 text-center font-semibold">N° Matricule</th>
                                                 <th class="pb-3 text-center font-semibold">Nom</th>
@@ -103,36 +79,37 @@
                                                 <th class="pb-3 text-center font-semibold">Actions</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="divide-y divide-slate-800/50">
+                                        <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
                                             <c:forEach var="e" items="${entry.value}">
-                                                <tr class="group/row transition-colors">
-                                                    <td class="py-4 text-center font-mono text-blue-400 text-sm">${e.numEtudiant}</td>
-                                                    <td class="py-4 text-center uppercase text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800">${e.nom}</td>
-                                                    <td class="py-4 text-center text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800">${e.prenoms}</td>
-                                                    <td class="py-4 text-center text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-center">${e.email}</td>
-                                                   <td class="py-4 text-center">
+                                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                                                    <td class="py-4 text-center font-mono text-blue-500 text-sm">${e.numEtudiant}</td>
+                                                    <td class="py-4 text-center uppercase text-gray-700 dark:text-gray-300">${e.nom}</td>
+                                                    <td class="py-4 text-center text-gray-700 dark:text-gray-300">${e.prenoms}</td>
+                                                    <td class="py-4 text-center text-gray-500 dark:text-gray-400 text-sm">${e.email}</td>
+                                                    <td class="py-4 text-center">
                                                         <div class="flex justify-center gap-4">
-                                                            <%-- Comparaison de l'email de l'étudiant de la ligne avec l'email stocké en session --%>
-                                                            <c:if test="${e.email == sessionScope.utilisateurConnecte.email}">
-                                                                <%-- C'est MOI (Nandresy), j'ai les droits --%>
-                                                                <a href="?action=edit&id=${e.numEtudiant}" 
-                                                                    class="text-amber-500/80 hover:text-amber-400 transition-colors"
-                                                                    title="Modifier mes informations">
+
+                                                            <c:if test="${e.email == sessionScope.utilisateurConnecte.email || sessionScope.role == 'ADMIN'}">
+                                                                <%-- Modifier --%>
+                                                                <a href="?action=edit&id=${e.numEtudiant}"
+                                                                   class="text-amber-500 hover:text-amber-400 transition-colors"
+                                                                   title="Modifier">
                                                                     <i class="bi bi-pencil-square text-lg"></i>
                                                                 </a>
-                                                                <button onclick="deleteStudent('${e.numEtudiant}')" 
-                                                                        class="text-red-500/80 hover:text-red-400 transition-colors"
-                                                                        title="Supprimer mon compte">
+                                                                <%-- Supprimer --%>
+                                                                <button onclick="deleteStudent('${e.numEtudiant}', '${e.nom} ${e.prenoms}')"
+                                                                        class="text-red-500 hover:text-red-400 transition-colors"
+                                                                        title="Supprimer">
                                                                     <i class="bi bi-trash text-lg"></i>
                                                                 </button>
                                                             </c:if>
-                                                            
-                                                            <%-- Ce n'est pas moi, j'affiche un cadenas pour indiquer que c'est verrouillé --%>
-                                                            <c:if test="${e.email != sessionScope.utilisateurConnecte.email}">
-                                                                <span class="text-gray-500 opacity-40" title="Lecture seule">
+
+                                                            <c:if test="${e.email != sessionScope.utilisateurConnecte.email && sessionScope.role != 'ADMIN'}">
+                                                                <span class="text-gray-400 opacity-40" title="Lecture seule">
                                                                     <i class="bi bi-lock-fill text-lg"></i>
                                                                 </span>
                                                             </c:if>
+
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -141,13 +118,14 @@
                                     </table>
                                 </div>
                             </details>
-                            
                         </c:forEach>
                     </c:when>
 
                     <c:otherwise>
-                        <div class="text-center py-20 bg-slate-900 rounded-xl border border-dashed border-slate-800">
-                            <p class="text-slate-500">Aucune donnée disponible.</p>
+                        <div class="text-center py-20 bg-white dark:bg-gray-800 rounded-xl 
+                                    border border-dashed border-gray-300 dark:border-gray-700">
+                            <i class="bi bi-inbox text-4xl text-gray-400"></i>
+                            <p class="text-gray-500 mt-2">Aucune donnée disponible.</p>
                         </div>
                     </c:otherwise>
                 </c:choose>
@@ -155,21 +133,102 @@
         </div>
     </main>
 
-    <% if(request.getAttribute("erreur") != null) { %>
-        <div class="max-w-6xl mx-auto px-6 mb-4">
-            <div class="p-4 bg-red-900/30 border border-red-700 rounded-lg text-red-400 text-sm flex items-center gap-2">
-                <i class="bi bi-exclamation-circle"></i>
-                <%= request.getAttribute("erreur") %>
-            </div>
-        </div>
-    <% } %>
-    
     <script>
-        function deleteStudent(id) {
-            if (confirm("Voulez-vous vraiment supprimer l'étudiant " + id + " ?")) {
-                window.location.href = "<%= request.getContextPath() %>/etudiants?action=delete&id=" + id;
-            }
+        const isDark = document.documentElement.classList.contains('dark');
+        const swalBase = {
+            background: isDark ? '#1e293b' : '#fff',
+            color:      isDark ? '#f1f5f9' : '#1e293b',
+            customClass: { popup: 'rounded-2xl' }
+        };
+
+        /* ── Confirmation suppression ── */
+        function deleteStudent(id, nom) {
+            Swal.fire({
+                ...swalBase,
+                title: 'Supprimer cet étudiant ?',
+                html: `Vous êtes sur le point de supprimer <b>${nom}</b>.<br>Cette action est irréversible.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor:  '#6b7280',
+                confirmButtonText:  '<i class="bi bi-trash me-1"></i> Oui, supprimer',
+                cancelButtonText:   'Annuler',
+            }).then(result => {
+                if (result.isConfirmed) {
+                    window.location.href =
+                        '${pageContext.request.contextPath}/etudiants?action=delete&id=' + id;
+                }
+            });
         }
+
+        /* ── Alertes après redirection ── */
+        document.addEventListener('DOMContentLoaded', function () {
+            const params = new URLSearchParams(window.location.search);
+            const erreur = params.get('erreur');
+            const succes = params.get('succes');
+
+            /* Messages d'erreur */
+            const erreurs = {
+                delete_linked: {
+                    title: 'Suppression impossible',
+                    html:  "Cet étudiant est lié à des <b>examens ou résultats</b> existants.<br>Supprimez d'abord les données associées.",
+                    icon:  'warning'
+                },
+                delete_forbidden: {
+                    title: 'Action refusée',
+                    html:  "Vous n'avez pas la permission de supprimer ce compte.",
+                    icon:  'error'
+                },
+                not_found: {
+                    title: 'Introuvable',
+                    html:  "Cet étudiant n'existe pas ou a déjà été supprimé.",
+                    icon:  'info'
+                },
+                invalid_id: {
+                    title: 'Erreur',
+                    html:  'Identifiant invalide.',
+                    icon:  'error'
+                }
+            };
+
+            /* Messages de succès */
+            const succes_msgs = {
+                deleted: {
+                    title: 'Supprimé !',
+                    html:  "L'étudiant a été supprimé avec succès.",
+                    icon:  'success'
+                },
+                add: {
+                    title: 'Ajouté !',
+                    html:  'Nouvel étudiant ajouté avec succès.',
+                    icon:  'success'
+                },
+                edit: {
+                    title: 'Modifié !',
+                    html:  "Les informations ont été mises à jour.",
+                    icon:  'success'
+                }
+            };
+
+            if (erreur && erreurs[erreur]) {
+                Swal.fire({
+                    ...swalBase,
+                    ...erreurs[erreur],
+                    confirmButtonColor: '#4f46e5',
+                    confirmButtonText:  'Compris'
+                });
+            }
+
+            if (succes && succes_msgs[succes]) {
+                Swal.fire({
+                    ...swalBase,
+                    ...succes_msgs[succes],
+                    timer: 2500,
+                    showConfirmButton: false
+                });
+            }
+        });
     </script>
+
 </body>
 </html>

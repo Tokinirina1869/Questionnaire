@@ -21,28 +21,31 @@
     <meta charset="UTF-8">
     <title>Gestion de Questionnaire</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' };
+    </script>
 </head>
-<body>
+<body class="bg-white dark:bg-gray-800 transition-colors duration-300">
     <jsp:include page="/navbar.jsp"/>
 
-    <main class="max-w-3xl mx-auto p-6">
-        <h1 class="text-2xl font-bold border-l-4 border-blue-500 pl-4 mb-8">
+    <main class="max-w-6xl mx-auto p-6">
+        <h1 class="text-2xl font-bold border-l-4 border-blue-500 pl-4 mb-8 text-gray-500 dark:text-gray-400">
             Assignation d'un nouvel examen
         </h1>
 
         <form method="POST" action="<%= request.getContextPath() %>/examen" class="space-y-6">
-            <div class="border rounded-xl p-5 space-y-4 bg-white shadow-sm">
+            <div class="border rounded-xl p-5 space-y-4 bg-white dark:bg-gray-800 shadow-sm">
                 <h2 class="font-semibold text-blue-600 flex items-center">
                     <i class="fas fa-bullhorn mr-2"></i>Étudiants concernés
                 </h2>
                 
-                <div class="space-y-2 max-h-48 overflow-y-auto border border-gray-200 p-3 rounded-lg bg-gray-50">
-                    <label class="flex items-center gap-2 font-bold text-sm mb-2 border-b pb-2 text-gray-700">
+                <div class="space-y-2 max-h-48 overflow-y-auto border border-gray-200 p-3 rounded-lg bg-white dark:bg-gray-800">
+                    <label class="flex items-center gap-2 font-bold text-sm mb-2 border-b pb-2 text-gray-500 dark:text-gray-400">
                         <input type="checkbox" id="select-all" onclick="toggleAll(this)"> 
                         Sélectionner tout le groupe (<%= etudiants.size() %>)
                     </label>
                     <% for (Etudiant e : etudiants) { %>
-                        <label class="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-md cursor-pointer">
+                        <label class="flex items-center gap-3 p-2 rounded-md cursor-pointer text-gray-500 dark:text-gray-400">
                             <input type="checkbox" name="ids_etudiants" value="<%= e.getNumEtudiant() %>" class="etu-checkbox">
                             <span class="text-sm"><%= e.getNom() %> <%= e.getPrenoms() %></span>
                         </label>
@@ -50,9 +53,9 @@
                 </div>
 
                 <div>
-                    <label class="text-xs font-bold uppercase text-gray-500">Session / Année</label>
+                    <label class="text-xs font-bold uppercase text-gray-500 dark:text-gray-100">Session / Année scolaire</label>
                     <input type="text" name="annee_univ" required placeholder="Ex: 2025-2026"
-                        class="w-full px-4 py-2.5 rounded-lg text-sm border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"/>
+                        class="w-full px-4 py-2.5 rounded-lg bg-white dark:bg-gray-800 text-white dark:text-gray-100 text-sm border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"/>
                 </div>
 
                 <button type="submit" 

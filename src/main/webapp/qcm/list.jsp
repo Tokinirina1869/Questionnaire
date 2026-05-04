@@ -31,13 +31,16 @@
     <title>Gestion de Questionnaire</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <script>
+        tailwind.config = { darkMode: 'class' };
+    </script>
 </head>
-<body>
+<body class="bg-white dark:bg-gray-800 transition-colors duration-300">
     <jsp:include page="/navbar.jsp" />
     
     <main class="mx-auto p-6">
         <div class="flex justify-between items-center mb-8">
-            <h1 class="text-2xl font-bold border-l-4 border-blue-500 pl-4">
+            <h1 class="text-2xl font-bold border-l-4 border-blue-500 pl-4 text-gray-500 dark:text-gray-400">
                 Bibliothèque de Questions
             </h1>
             <a href="<%= request.getContextPath() %>/qcm?action=add"
@@ -50,7 +53,7 @@
         <div class="bg-white dark:bg-gray-900 rounded-xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-800">
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
-                    <thead class="bg-blue-800 dark:bg-blue-900 text-white text-center">
+                    <thead class="bg-blue-800 dark:bg-blue-900 text-white dark:text-gray-100 text-center">
                         <th class="px-6 py-4">Questions</th>
                         <th class="px-6 py-4">Réponses</th>
                         <th class="px-6 py-4">Bonne Réponse</th>
@@ -63,16 +66,16 @@
                                 for(Qcm item : listeQcm) {
                         %>
                         <tr>
-                            <td class="px-6 py-4 text-sm text-center"> 
+                            <td class="px-6 py-4 text-sm text-center text-gray-500 dark:text-gray-400"> 
                                 <%= item.getQuestion() %>   
                             </td>
-                            <td class="px-6 py-4 text-sm text-center">
+                            <td class="px-6 py-4 text-sm text-center text-gray-500 dark:text-gray-400">
                                 1-<%= item.getReponse1() %> <span class="p-1">|</span>
                                 2-<%= item.getReponse2() %> <span class="p-1">|</span>
                                 3-<%= item.getReponse3() %> <span class="p-1">|</span>
                                 4-<%= item.getReponse4() %> 
                             </td>
-                            <td class="px-6 py-4 text-sm text-center">
+                            <td class="px-6 py-4 text-sm text-center text-gray-500 dark:text-gray-400">
                                 <%= item.getBonneReponse() %> 
                             </td>
                             <td class="px-6 py-4 text-sm text-center">

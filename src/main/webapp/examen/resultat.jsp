@@ -31,14 +31,17 @@
     <meta charset="UTF-8">
     <title>Gestion de Questionnaire</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' };
+    </script>
 </head>
-<body>
+<body class="bg-white dark:bg-gray-800 transition-colors duration-300">
 
     <jsp:include page="/navbar.jsp"/>
 
     <div class="container mx-auto p-6">
         <div class="flex justify-between items-center mb-8">
-            <h1 class="text-2xl font-bold border-l-4 border-blue-500 dark:border-blue-400 pl-4">
+            <h1 class="text-2xl font-bold border-l-4 border-blue-500 dark:border-blue-400 pl-4 text-gray-500 dark:text-gray-400">
                 Classement des étudiants par ordre de mérite
             </h1>
         </div>
@@ -59,14 +62,14 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-200 dark:divide-gray-800"> 
+                    <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"> 
                         <c:forEach var="ex" items="${examens}" varStatus="st">
                             <tr>
-                                <td class="py-4 text-center">${st.count}</td>
+                                <td class="py-4 text-center text-gray-500 dark:text-gray-400">${st.count}</td>
                                 <td class="text-center text-sm font-mono text-blue-600 dark:text-blue-400">${ex.etudiant.numEtudiant}</td>
-                                <td class="text-center text-sm">${ex.etudiant.nom} ${ex.etudiant.prenoms}</td>
+                                <td class="text-center text-sm text-gray-500 dark:text-gray-400">${ex.etudiant.nom} ${ex.etudiant.prenoms}</td>
                                 <td class="text-center text-sm italic text-gray-600 dark:text-gray-400">${ex.etudiant.email}</td>
-                                <td class="text-center text-sm">${ex.anneeUniv}</td>
+                                <td class="text-center text-sm text-gray-500 dark:text-gray-400">${ex.anneeUniv}</td>
                                 <td class="fw-bold text-center text-lg text-blue-700 dark:text-blue-300">${ex.note}</td>
                                 <td class="text-center">
                                     <c:choose>

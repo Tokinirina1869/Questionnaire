@@ -7,8 +7,11 @@
     <title>Classement Final - Ordre de Mérite</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <script>
+        tailwind.config = { darkMode: 'class' };
+    </script>
 </head>
-<body class="bg-gray-900 text-white min-h-screen">
+<body class="bg-white dark:bg-gray-800 transition-colors duration-300">
 
     <jsp:include page="/navbar.jsp" />
 
@@ -26,9 +29,9 @@
             </h1>
         </div>
 
-        <div class="overflow-hidden rounded-xl border border-gray-700 bg-gray-800 shadow-xl">
+        <div class="overflow-hidden rounded-xl bg-white dark:bg-gray-900 border border-gray-700 bg-gray-800 shadow-xl">
             <table class="w-full text-left">
-                <thead class="bg-gray-700/50 text-gray-300 uppercase text-sm">
+                <thead class="bg-blue-800 text-white uppercase text-sm">
                     <tr>
                         <th class="px-6 py-4 text-center">Rang</th>
                         <th class="px-6 py-4">Étudiant</th>
@@ -38,21 +41,21 @@
                 </thead>
                 <tbody class="divide-y divide-gray-700">
                     <c:forEach var="exam" items="${classements}" varStatus="status">
-                        <tr class="${status.first ? 'bg-yellow-600/10' : ''} hover:bg-gray-750 transition-colors">
-                            <td class="px-6 py-4 text-center">
+                        <tr class="${status.first ? 'bg-yellow-600/10' : ''} bg-white dark:bg-gray-900 transition-colors">
+                            <td class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
                                 <c:choose>
                                     <c:when test="${status.count == 1}">
                                         <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-yellow-500 text-black font-bold">1</span>
                                     </c:when>
                                     <c:otherwise>
-                                        <span class="text-gray-400">${status.count}</span>
+                                        <span class="text-gray-500 dark:text-gray-400">${status.count}</span>
                                     </c:otherwise>
                                 </c:choose>
                             </td>
-                            <td class="px-6 py-4 font-medium">
+                            <td class="px-6 py-4 font-medium text-gray-500 dark:text-gray-400">
                                 ${exam.etudiant.nom} ${exam.etudiant.prenoms}
                             </td>
-                            <td class="px-6 py-4 text-gray-400">
+                            <td class="px-6 py-4 text-gray-500 dark:text-gray-400">
                                 ${exam.anneeUniv}
                             </td>
                             <td class="px-6 py-4 text-right">

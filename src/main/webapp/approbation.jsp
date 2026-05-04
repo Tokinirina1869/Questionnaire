@@ -32,6 +32,10 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
         }
+        .dark .glass-effect {
+            background: rgba(30, 41, 59, 0.95);
+            border-color: rgba(51, 65, 85, 0.8);
+        }
         .status-badge {
             transition: all 0.2s ease;
         }
@@ -63,8 +67,11 @@
         .delay-9 { animation-delay: 0.9s; }
         .delay-10 { animation-delay: 1.0s; }
     </style>
+    <script>
+        tailwind.config = { darkMode: 'class' };
+    </script>
 </head>
-<body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
+<body class="bg-white dark:bg-gray-800 transition-colors duration-300">
 
     <jsp:include page="/navbar.jsp" />
     
@@ -81,7 +88,7 @@
                             <h1 class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
                                 Gestion des Accès
                             </h1>
-                            <p class="text-gray-600 text-sm">Approuvez ou rejetez les demandes d'accès à la plateforme</p>
+                            <p class="text-gray-500 dark:text-gray-400* text-sm text-gray-500 dark:text-gray-400">Approuvez ou rejetez les demandes d'accès à la plateforme</p>
                         </div>
                     </div>
                 </div>
@@ -91,7 +98,7 @@
                     </div>
                     <div class="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-2 text-sm">
                         <i class="fas fa-users mr-2 text-indigo-600"></i>
-                        <span class="font-semibold text-gray-700">${listeAdmins.size() + listeEtudiants.size()}</span> demandes
+                        <span class="font-semibold text-gray-500 dark:text-gray-400">${listeAdmins.size() + listeEtudiants.size()}</span> demandes
                     </div>
                 </div>
             </div>
@@ -99,10 +106,10 @@
 
         <!-- Filtres et statistiques -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            <div class="glass-effect rounded-xl p-4 border border-gray-100 card-hover">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 card-hover">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-xs text-gray-500 uppercase tracking-wide">Administrateurs</p>
+                        <p class="text-xstext-gray-500 dark:text-gray-400 uppercase tracking-wide">Administrateurs</p>
                         <p class="text-2xl font-bold text-indigo-600">${listeAdmins.size()}</p>
                     </div>
                     <div class="p-2 bg-indigo-100 rounded-lg">
@@ -110,10 +117,10 @@
                     </div>
                 </div>
             </div>
-            <div class="glass-effect rounded-xl p-4 border border-gray-100 card-hover">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 card-hover">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-xs text-gray-500 uppercase tracking-wide">Étudiants</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Étudiants</p>
                         <p class="text-2xl font-bold text-blue-600">${listeEtudiants.size()}</p>
                     </div>
                     <div class="p-2 bg-blue-100 rounded-lg">
@@ -121,10 +128,10 @@
                     </div>
                 </div>
             </div>
-            <div class="glass-effect rounded-xl p-4 border border-gray-100 card-hover">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 card-hover">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-xs text-gray-500 uppercase tracking-wide">En attente</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">En attente</p>
                         <p class="text-2xl font-bold text-yellow-600">
                             ${listeAdmins.stream().filter(a -> !a.approuve).count() + listeEtudiants.stream().filter(e -> !e.approuve).count()}
                         </p>
@@ -134,10 +141,10 @@
                     </div>
                 </div>
             </div>
-            <div class="glass-effect rounded-xl p-4 border border-gray-100 card-hover">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 card-hover">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-xs text-gray-500 uppercase tracking-wide">Approuvés</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Approuvés</p>
                         <p class="text-2xl font-bold text-green-600">
                             ${listeAdmins.stream().filter(a -> a.approuve).count() + listeEtudiants.stream().filter(e -> e.approuve).count()}
                         </p>
@@ -155,7 +162,7 @@
                 <div class="p-2 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg mr-3">
                     <i class="fas fa-user-shield text-white"></i>
                 </div>
-                <h2 class="text-xl font-bold text-gray-800">Demandes d'accès Administrateur</h2>
+                <h2 class="text-xl font-bold text-gray-500 dark:text-gray-400 ">Demandes d'accès Administrateur</h2>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -167,8 +174,8 @@
                                     ${a.nomAdmin.charAt(0)}
                                 </div>
                                 <div>
-                                    <h3 class="font-semibold text-gray-800">${a.nomAdmin}</h3>
-                                    <p class="text-xs text-gray-500">${a.emailAdmin}</p>
+                                    <h3 class="font-semibold text-gray-500 dark:text-gray-400">${a.nomAdmin}</h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">${a.emailAdmin}</p>
                                 </div>
                             </div>
                             <span class="status-badge px-3 py-1 text-xs font-bold ${a.approuve ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700 pulse-animation'} rounded-full uppercase">
@@ -177,11 +184,11 @@
                         </div>
                         
                         <div class="space-y-2 mb-4">
-                            <div class="flex items-center text-sm text-gray-600">
+                            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400*">
                                 <i class="fas fa-user-tag mr-2 text-indigo-500"></i>
                                 <span>Administrateur</span>
                             </div>
-                            <div class="flex items-center text-sm text-gray-600">
+                            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400*">
                                 <i class="fas fa-calendar mr-2 text-gray-400"></i>
                                 <span>${a.dateInscrit}</span>
                             </div>
@@ -223,7 +230,7 @@
                 <div class="p-2 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg mr-3">
                     <i class="fas fa-graduation-cap text-white"></i>
                 </div>
-                <h2 class="text-xl font-bold text-gray-800">Demandes d'accès Étudiant</h2>
+                <h2 class="text-xl font-bold text-gray-500 dark:text-gray-400">Demandes d'accès Étudiant</h2>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -235,8 +242,8 @@
                                     ${e.nom.charAt(0)}
                                 </div>
                                 <div>
-                                    <h3 class="font-semibold text-gray-800">${e.nom} ${e.prenoms}</h3>
-                                    <p class="text-xs text-gray-500">${e.email}</p>
+                                    <h3 class="font-semibold text-gray-500 dark:text-gray-400">${e.nom} ${e.prenoms}</h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">${e.email}</p>
                                 </div>
                             </div>
                             <span class="status-badge px-3 py-1 text-xs font-bold ${e.approuve ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700 pulse-animation'} rounded-full uppercase">
@@ -245,11 +252,11 @@
                         </div>
                         
                         <div class="space-y-2 mb-4">
-                            <div class="flex items-center text-sm text-gray-600">
+                            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400*">
                                 <i class="fas fa-graduation-cap mr-2 text-blue-500"></i>
                                 <span>Étudiant (${e.niveau})</span>
                             </div>
-                            <div class="flex items-center text-sm text-gray-600">
+                            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400*">
                                 <i class="fas fa-calendar mr-2 text-gray-400"></i>
                                 <span>${e.dateInscrit}</span>
                             </div>
