@@ -25,7 +25,7 @@
         <div class="border rounded-xl shadow-xl overflow-hidden">
 
             <%-- Barre de recherche --%>
-            <div class="p-4 border-b dark:border-gray-700">
+            <div class="p-4 border-b dark:border-gray-700 flex gap-5">
                 <form method="GET" action="${pageContext.request.contextPath}/etudiants"
                       class="flex gap-3">
                     <input type="hidden" name="action" value="search"/>
@@ -43,6 +43,11 @@
                         <i class="bi bi-search"></i> Rechercher
                     </button>
                 </form>
+                <a href="${pageContext.request.contextPath}/etudiants" class="px-4 bg-amber-400 rounded-lg text-white text-sm font-medium hover:bg-amber-400 transition-colors 
+                    flex items-center gap-3">
+                    <i class="bi bi-arrow-clockwise"></i>
+                    <span>Actualiser</span>
+                </a>
             </div>
 
             <%-- Tableau --%>

@@ -89,7 +89,7 @@
                     <i class="fas fa-brain"></i>
                 </div>
                 <span class="text-lg font-black text-slate-800 dark:text-white tracking-tighter">
-                    QUIZ<span class="text-indigo-600">PRO</span>
+                    QUIZ<span class="text-blue-800">PRO</span>
                 </span>
             </a>
 
@@ -105,10 +105,6 @@
                     <a href="${pageContext.request.contextPath}/etudiants"
                        class="nav-link ${uri.contains('etudiants') ? 'nav-link-active' : ''}">
                         <i class="fas fa-users mr-1.5 text-xs opacity-70"></i>Liste Étudiants
-                    </a>
-                    <a href="${pageContext.request.contextPath}/etudiant/passer-examen"
-                       class="nav-link ${uri.contains('classement') ? 'nav-link-active' : ''}">
-                        <i class="fas fa-star mr-1.5 text-xs opacity-70"></i>Questions
                     </a>
                     <a href="${pageContext.request.contextPath}/etudiant/classement"
                        class="nav-link ${uri.contains('classement') ? 'nav-link-active' : ''}">

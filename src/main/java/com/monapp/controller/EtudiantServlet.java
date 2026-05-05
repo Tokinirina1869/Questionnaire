@@ -109,7 +109,7 @@ public class EtudiantServlet extends HttpServlet {
                 String q = req.getParameter("q");
                 req.setAttribute("etudiants", service.rechercher(q));
                 req.setAttribute("query", q);
-                req.getRequestDispatcher("/etudiants/list.jsp").forward(req, response);
+                req.getRequestDispatcher("/etudiants/listApprouve.jsp").forward(req, response);
             }
             else {
                 List<Etudiant> etudiants = service.lister();

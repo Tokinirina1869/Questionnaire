@@ -81,11 +81,11 @@
             <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div class="mb-4 md:mb-0">
                     <div class="flex items-center space-x-3 mb-2">
-                        <div class="p-3 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl shadow-lg">
+                        <div class="p-3 bg-gradient-to-r from-blue-800 to-purple-600 rounded-xl shadow-lg">
                             <i class="fas fa-shield-alt text-white text-xl"></i>
                         </div>
                         <div>
-                            <h1 class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                            <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-800 to-purple-600 bg-clip-text text-transparent">
                                 Gestion des Accès
                             </h1>
                             <p class="text-gray-500 dark:text-gray-400* text-sm text-gray-500 dark:text-gray-400">Approuvez ou rejetez les demandes d'accès à la plateforme</p>
@@ -93,11 +93,11 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-3">
-                    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-lg">
+                    <div class="bg-gradient-to-r from-blue-800 to-purple-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-lg">
                         <i class="fas fa-crown mr-2"></i>Espace Super Admin
                     </div>
                     <div class="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-2 text-sm">
-                        <i class="fas fa-users mr-2 text-indigo-600"></i>
+                        <i class="fas fa-users mr-2 text-blue-800"></i>
                         <span class="font-semibold text-gray-500 dark:text-gray-400">${listeAdmins.size() + listeEtudiants.size()}</span> demandes
                     </div>
                 </div>
@@ -110,10 +110,10 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-xstext-gray-500 dark:text-gray-400 uppercase tracking-wide">Administrateurs</p>
-                        <p class="text-2xl font-bold text-indigo-600">${listeAdmins.size()}</p>
+                        <p class="text-2xl font-bold text-blue-800">${listeAdmins.size()}</p>
                     </div>
                     <div class="p-2 bg-indigo-100 rounded-lg">
-                        <i class="fas fa-user-shield text-indigo-600"></i>
+                        <i class="fas fa-user-shield text-blue-800"></i>
                     </div>
                 </div>
             </div>
@@ -159,7 +159,7 @@
         <!-- Liste des administrateurs -->
         <div class="mb-8">
             <div class="flex items-center mb-4">
-                <div class="p-2 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg mr-3">
+                <div class="p-2 bg-gradient-to-r from-blue-800 to-purple-600 rounded-lg mr-3">
                     <i class="fas fa-user-shield text-white"></i>
                 </div>
                 <h2 class="text-xl font-bold text-gray-500 dark:text-gray-400 ">Demandes d'accès Administrateur</h2>
@@ -170,7 +170,7 @@
                     <div class="glass-effect rounded-xl p-6 border border-gray-100 card-hover text-center justify-center fade-in delay-${status.index}">
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex items-center space-x-3">
-                                <div class="w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                                <div class="w-12 h-12 bg-gradient-to-r from-blue-800 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
                                     ${a.nomAdmin.charAt(0)}
                                 </div>
                                 <div>
