@@ -62,17 +62,22 @@ public class EtudiantRepository {
         }
     }
 
-    public List<Etudiant> search(String query)
-    {
+    public List<Etudiant> search(String query) {
+        if (query == null || query.trim().isEmpty()) {
+            return em.createQuery("SELECT e FROM Etudiant e", Etudiant.class).getResultList();
+        }
+
+        String searchParam = "%" + query.toLowerCase().trim() + "%";
+
         return em.createQuery(
             "SELECT e FROM Etudiant e " +
-            "WHERE e.numEtudiant LIKE :q " + 
-            "OR e.nom       LIKE :q " +
-            "OR e.prenoms   LIKE :q " +
-            "OR e.niveau    LIKE :q " +
-            "OR e.email     LIKE :q ", 
+            "WHERE e.approuve = true AND (" + 
+            "LOWER(e.numEtudiant) LIKE :q " + 
+            "OR LOWER(e.nom) LIKE :q " +
+            "OR LOWER(e.prenoms) LIKE :q " +
+            "OR LOWER(e.email) LIKE :q)", 
             Etudiant.class)
-            .setParameter("q", "%" + query + "%")
+            .setParameter("q", searchParam)
             .getResultList();
     }
 

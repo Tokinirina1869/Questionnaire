@@ -25,26 +25,26 @@
         <div class="border rounded-xl shadow-xl overflow-hidden">
 
             <%-- Barre de recherche --%>
-            <div class="p-4 border-b dark:border-gray-700 flex gap-5">
+            <div class="p-4 border-b dark:border-gray-700 flex flex-col md:flex-row gap-4 items-center">
                 <form method="GET" action="${pageContext.request.contextPath}/etudiants"
-                      class="flex gap-3">
+                    class="flex-1 flex gap-2 w-full">
                     <input type="hidden" name="action" value="search"/>
-                    <input type="text" name="q"
-                        value="${not empty requestScope.query ? requestScope.query : ''}"
-                        placeholder="Rechercher..."
-                        class="w-full px-4 py-2.5 rounded-lg text-sm
-                               border border-gray-300 dark:border-gray-700
-                               bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100
-                               focus:ring-2 focus:ring-blue-500 outline-none"/>
-                    <button type="submit"
-                            class="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 
-                                   rounded-lg text-sm font-medium transition-colors 
-                                   flex items-center gap-2">
-                        <i class="bi bi-search"></i> Rechercher
+                    <div class="relative w-full">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" name="q"
+                            value="${query}"
+                            placeholder="Rechercher un étudiant (Nom, Matricule, Email...)"
+                            class="w-full pl-10 pr-4 py-2.5 rounded-lg text-sm border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"/>
+                    </div>
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                        Rechercher
                     </button>
                 </form>
-                <a href="${pageContext.request.contextPath}/etudiants" class="px-4 bg-amber-400 rounded-lg text-white text-sm font-medium hover:bg-amber-400 transition-colors 
-                    flex items-center gap-3">
+                
+                <a href="${pageContext.request.contextPath}/etudiants?action=list" 
+                    class="px-4 py-2.5 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors flex items-center gap-2 whitespace-nowrap">
                     <i class="bi bi-arrow-clockwise"></i>
                     <span>Actualiser</span>
                 </a>

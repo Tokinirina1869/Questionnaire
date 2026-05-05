@@ -105,9 +105,14 @@ public class EtudiantServlet extends HttpServlet {
                     response.sendRedirect(req.getContextPath() + "/etudiants?erreur=delete_linked");
                 }
             }
-            else if ("search".equals(action)) {
+           else if ("search".equals(action)) {
                 String q = req.getParameter("q");
-                req.setAttribute("etudiants", service.rechercher(q));
+                List<Etudiant> resultats = service.rechercher(q);
+                
+                Map<String, List<Etudiant>> groupes = resultats.stream()
+                        .collect(Collectors.groupingBy(Etudiant::getNiveau));
+                
+                req.setAttribute("groupes", groupes); 
                 req.setAttribute("query", q);
                 req.getRequestDispatcher("/etudiants/listApprouve.jsp").forward(req, response);
             }

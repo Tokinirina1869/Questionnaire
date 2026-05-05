@@ -42,7 +42,7 @@
                 <div class="space-y-2 max-h-48 overflow-y-auto border border-gray-200 p-3 rounded-lg bg-white dark:bg-gray-800">
                     <label class="flex items-center gap-2 font-bold text-sm mb-2 border-b pb-2 text-gray-500 dark:text-gray-400">
                         <input type="checkbox" id="select-all" onclick="toggleAll(this)"> 
-                        Sélectionner tout le groupe (<%= etudiants.size() %>)
+                        Sélectionner tous les étudiants  (<%= etudiants.size() %>)
                     </label>
                     <% for (Etudiant e : etudiants) { %>
                         <label class="flex items-center gap-3 p-2 rounded-md cursor-pointer text-gray-500 dark:text-gray-400">
