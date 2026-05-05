@@ -17,7 +17,7 @@ public class SSLMonitoringService {
     @Inject
     private EmailService ServiceMail;
 
-    @Schedule(hour = "*", minute = "20", second = "0", persistent = false)
+    @Schedule(hour = "12", minute = "0", second = "0", persistent = false)
     public void checkSSLValidity(){
         try {
             URL url = new URL("https://questionnaire-iqzw.onrender.com/");
@@ -40,7 +40,7 @@ public class SSLMonitoringService {
                 ServiceMail.send(
                     "roberttokinirina@gmail.com", 
                     "Audit SSL Quotidien - OK", 
-                    "Le certificat est valide. Jours restants : " + daysLeft
+                    "Le certificat est validé. Jours restants : " + daysLeft
                 );
             }
             
