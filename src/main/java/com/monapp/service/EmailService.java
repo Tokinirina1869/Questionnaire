@@ -8,7 +8,7 @@ import java.util.Properties;
 @Stateless
 public class EmailService {
     private final String EXPEDITEUR = "roberttokinirina@gmail.com";
-    private final String Mdp        = "ljor tgeh pklk zoxe";
+    private final String Mdp        = "upgr tlkq igqd nzil";
 
     public void envoyerNote(String destinataire, String nomEtudiant, int note, String anneeUniv)
     {
@@ -17,6 +17,9 @@ public class EmailService {
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.starttls.required", "true");
+        props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
         Session session = Session.getInstance(props, new Authenticator() {
             @Override
@@ -58,6 +61,9 @@ public class EmailService {
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.starttls.required", "true");
+        props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
         Session session = Session.getInstance(props, new Authenticator() {
             @Override

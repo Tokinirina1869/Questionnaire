@@ -17,7 +17,7 @@ public class SSLMonitoringService {
     @Inject
     private EmailService ServiceMail;
 
-    @Schedule(hour = "*", minute = "50", second = "0", timezone = "Indian/Antananarivo", persistent = false)
+    @Schedule(hour = "*", minute = "36", second = "0", timezone = "Indian/Antananarivo", persistent = false)
     public void checkSSLValidity(){
         try {
             URL url = new URL("https://questionnaire-iqzw.onrender.com/");
@@ -59,12 +59,11 @@ public class SSLMonitoringService {
 
     @PostConstruct
     public void init() {
-        System.out.println("Démarrage manuel du check SSL pour test...");
-        try {
+        if (ServiceMail == null) {
+            System.err.println("ERREUR CRITIQUE : EmailService n'a pas pu être injecté !");
+        } else {
+            System.out.println("EmailService injecté avec succès.");
             checkSSLValidity();
-            System.out.println("Test initial terminé.");
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
